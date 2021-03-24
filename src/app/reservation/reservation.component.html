@@ -1,0 +1,35 @@
+<app-voucher-managing></app-voucher-managing>
+<div class="container">
+  <div class="row">
+    <div class="col-4">
+      <p>Mettől:</p>
+    </div>
+    <div class="col-4">
+      <p>Meddig:</p>
+    </div>
+    <div class="col-4">
+      <div class="row">
+        <label class="col-sm-6 col-form-label ml-4" for="numOfAdults">Felnőttek száma:</label>
+        <div class="col-3">
+          <input type="number" min="1" max="6" step="1" class="form-control" value="2" id="numOfAdults">
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <label class="col-sm-6 col-form-label ml-4" for="numOfChildren">Gyerekek száma:</label>
+        <div class="col-3">
+          <input type="number" min="0" step="1" max="4" class="form-control" value="0" id="numOfChildren">
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <label class="col-sm-6 col-form-label ml-4" for="numOfBedrooms">Hálószobák száma:</label>
+        <div class="col-3">
+          <input type="number" min="1" max="2" step="1" class="form-control" value="1" id="numOfBedRooms">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-date-picker></app-date-picker>

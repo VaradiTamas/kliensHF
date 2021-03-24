@@ -1,0 +1,10 @@
+.contact {
+  margin: 10px;
+}
+
+h1{
+  border-bottom-style: solid;
+  border-bottom-width: 4px;
+  border-bottom-color: orangered;
+  padding: 15px;
+}

@@ -1,0 +1,24 @@
+.wrap{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+img{
+  width: 450px;
+}
+
+.container{
+  border: black;
+  border-style: dashed;
+  padding: 20px;
+}
+
+h2{
+  font-size: 35px;
+}
+
+button{
+  float: right;
+  height: 60px;
+  width: 120px;
+}
