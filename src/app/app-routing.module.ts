@@ -7,6 +7,7 @@ import {VoucherComponent} from "./voucher/voucher.component";
 import {QuestionsComponent} from "./questions/questions.component";
 import {AboutusComponent} from "./aboutus/aboutus.component";
 import {ReservationComponent} from "./reservation/reservation.component";
+import {AdminComponent} from "./admin/admin.component";
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/gallery', pathMatch: 'full' },
@@ -22,6 +23,7 @@ const appRoutes: Routes = [
   { path: 'questions', component: QuestionsComponent},
   { path: 'about-us', component: AboutusComponent},
   { path: 'reservation', component: ReservationComponent},
+  { path: 'admin', component: AdminComponent },
 ];
 
 @NgModule({
