@@ -18,6 +18,9 @@ import { DatePickerComponent } from './reservation/date-picker/date-picker.compo
 import {MaterialModule} from "./material.module";
 import {AppRoutingModule} from "./app-routing.module";
 import { HomeComponent } from './home/home.component';
+import { AdminComponent } from './admin/admin.component';
+import {HttpClientModule} from "@angular/common/http";
+import { BookingsComponent } from './admin/bookings/bookings.component';
 
 @NgModule({
   imports: [
@@ -26,7 +29,8 @@ import { HomeComponent } from './home/home.component';
     NgbModule,
     MaterialModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   declarations: [
     AppComponent,
@@ -41,7 +45,9 @@ import { HomeComponent } from './home/home.component';
     ReservationComponent,
     VoucherManagingComponent,
     DatePickerComponent,
-    HomeComponent
+    HomeComponent,
+    AdminComponent,
+    BookingsComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
