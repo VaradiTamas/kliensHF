@@ -21,6 +21,10 @@ import { HomeComponent } from './home/home.component';
 import { AdminComponent } from './admin/admin.component';
 import {HttpClientModule} from "@angular/common/http";
 import { BookingsComponent } from './admin/bookings/bookings.component';
+import { NavbarComponent } from './admin/navbar/navbar.component';
+import { CouponsComponent } from './admin/coupons/coupons.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NewBookingComponent } from './admin/bookings/new-booking/new-booking.component';
 
 @NgModule({
   imports: [
@@ -30,7 +34,8 @@ import { BookingsComponent } from './admin/bookings/bookings.component';
     MaterialModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   declarations: [
     AppComponent,
@@ -47,7 +52,10 @@ import { BookingsComponent } from './admin/bookings/bookings.component';
     DatePickerComponent,
     HomeComponent,
     AdminComponent,
-    BookingsComponent
+    BookingsComponent,
+    NavbarComponent,
+    CouponsComponent,
+    NewBookingComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

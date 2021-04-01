@@ -22,6 +22,10 @@ export class BookingsComponent implements OnInit, OnDestroy {
     });
   }
 
+  onDelete(bookingId: string){
+    this.bookingService.deleteBooking(bookingId);
+  }
+
   ngOnDestroy(): void {
     this.bookinsSubscription.unsubscribe();
   }

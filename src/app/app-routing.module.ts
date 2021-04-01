@@ -8,22 +8,24 @@ import {QuestionsComponent} from "./questions/questions.component";
 import {AboutusComponent} from "./aboutus/aboutus.component";
 import {ReservationComponent} from "./reservation/reservation.component";
 import {AdminComponent} from "./admin/admin.component";
+import {BookingsComponent} from "./admin/bookings/bookings.component";
+import {CouponsComponent} from "./admin/coupons/coupons.component";
+import {NewBookingComponent} from "./admin/bookings/new-booking/new-booking.component";
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/gallery', pathMatch: 'full' },
-  { path: 'gallery', component: GalleryComponent, children: [
-      /*{ path: '', component: RecipeStartComponent },
-      { path: 'new', component: RecipeEditComponent },
-      { path: ':id', component: RecipeDetailComponent },
-      { path: ':id/edit', component: RecipeEditComponent },*/
-    ] },
+  { path: 'gallery', component: GalleryComponent },
   { path: 'offers', component: OffersComponent },
   { path: 'voucher', component: VoucherComponent },
   { path: 'prices', component: PricesComponent },
   { path: 'questions', component: QuestionsComponent},
   { path: 'about-us', component: AboutusComponent},
   { path: 'reservation', component: ReservationComponent},
-  { path: 'admin', component: AdminComponent },
+  { path: 'admin', component: AdminComponent, children: [
+      { path: 'bookings', component: BookingsComponent },
+      { path: 'coupons', component: CouponsComponent },
+      { path: 'bookings/new', component: NewBookingComponent }
+      ]},
 ];
 
 @NgModule({

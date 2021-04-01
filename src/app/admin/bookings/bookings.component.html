@@ -1,3 +1,22 @@
+<br>
 <div *ngFor="let booking of bookings">
-  <p>{{booking.numOfAdults}}</p>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{booking.firstName}} {{booking.lastName}}
+      </mat-panel-title>
+      <button>
+        <img src="assets/icon/edit.svg">
+      </button>
+      <button class="delete" (click)="onDelete(booking.id)">
+        <img src="assets/icon/delete.svg">
+      </button>
+      <mat-panel-description>
+        Currently I am
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>I'm visible because I am open</p>
+  </mat-expansion-panel>
 </div>
+
+<a class="btn btn-primary" href="/admin/bookings/new">Foglalás hozzáadása</a>

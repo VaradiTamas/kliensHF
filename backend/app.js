@@ -1,11 +1,25 @@
 const express = require('express');
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const Booking = require('./models/booking');
 
 const app = express();
 
-app.use((req,res,next) =>{
+mongoose.connect("mongodb+srv://fahazfoglalo:ChsgicCcXqDvda26@cluster0.vyq6f.mongodb.net/firstDatabase?retryWrites=true&w=majority", {useNewUrlParser: true})
+  .then(()=>{
+    console.log('Connected to database!');
+  })
+  .catch(()=>{
+    console.log('Connection to database failed!');
+  });
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+
+app.use((req,res,next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
-    "Access-Control-Allow-Header",
+    "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
   );
   res.setHeader(
@@ -15,24 +29,38 @@ app.use((req,res,next) =>{
   next();
 });
 
-app.use('/admin/bookings', (req,res,next) => {
-  const bookings = [
-    {
-      numOfChildren: 1,
-      numOfAdults: 1,
-      numOfBedrooms: 2,
-      comment: 'elso obj',
-      isPaid: true
-    },
-    {
-      numOfChildren: 1,
-      numOfAdults: 10,
-      numOfBedrooms: 1,
-      comment: 'masodik obj',
-      isPaid: false
-    }
-  ];
-  res.status(200).json(bookings);
+app.post('/admin/bookings', (req,res,next) => {
+  const booking = new Booking({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    numOfChildren: req.body.numOfChildren,
+    numOfAdults: req.body.numOfAdults,
+    numOfBedrooms: req.body.numOfBedrooms,
+    comment: req.body.comment,
+    isPaid: req.body.isPaid
+  });
+  booking.save().then(createdBooking => {
+    res.status(201).json({
+      message: 'Booking added successfully',
+      bookingId: createdBooking._id
+    })
+  });
+});
+
+app.get('/admin/bookings', (req,res,next) => {
+  Booking.find().then(bookings => {
+    res.status(200).json({
+      message: "Bookings fetched successfully!",
+      bookings: bookings
+    });
+  });
+});
+
+app.use('/admin/bookings/delete/:id', (req,res,next) => {
+  Booking.deleteOne({_id: req.params.id}).then(result => {
+    console.log(result);
+    res.status(200).json({message: "Booking deleted!"});
+  });
 });
 
 module.exports = app;

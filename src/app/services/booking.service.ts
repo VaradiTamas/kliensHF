@@ -2,6 +2,7 @@ import {Booking} from "../model/booking.model";
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Subject} from "rxjs";
+import {map} from "rxjs/operators";
 
 @Injectable({providedIn: 'root'})
 export class BookingService{
@@ -11,16 +12,42 @@ export class BookingService{
   constructor(private http: HttpClient) {}
 
   getBookings(){
-    this.http.get<Booking[]>('http://localhost:3000/admin/bookings')
-      .subscribe((serverBookings)=>{
-        this.bookings = serverBookings;
+    this.http.get<{message: string, bookings: any}>('http://localhost:3000/admin/bookings')
+      .pipe(map((serverBookings) => {
+        return serverBookings.bookings.map(booking => {
+          return {
+            firstName: booking.firstName,
+            lastName: booking.lastName,
+            numOfChildren: booking.numOfChildren,
+            numOfAdults: booking.numOfAdults,
+            numOfBedrooms: booking.numOfBedrooms,
+            comment: booking.comment,
+            isPaid: booking.isPaid,
+            id: booking._id,
+          };
+        });
+      }))
+      .subscribe((transformedBookings)=>{
+        this.bookings = transformedBookings;
         this.bookingsUpdated.next([...this.bookings]);
       });
   }
 
   addBooking(booking: Booking){
-    this.bookings.push(booking);
-    this.bookingsUpdated.next([...this.bookings]);
+    this.http.post<{message: string, bookingId: string}>('http://localhost:3000/admin/bookings', booking)
+      .subscribe((responseData)=>{
+        const id = responseData.bookingId;
+        booking.id = id;
+        this.bookings.push(booking);
+        this.bookingsUpdated.next([...this.bookings]);
+      });
+  }
+
+  deleteBooking(bookingId: string){
+    this.http.delete('http://localhost:3000/admin/bookings/delete/' + bookingId)
+      .subscribe(() => {
+        console.log("deleted");
+      });
   }
 
   getBookingUpdateListener(){
