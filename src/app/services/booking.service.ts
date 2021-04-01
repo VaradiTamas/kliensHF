@@ -46,7 +46,9 @@ export class BookingService{
   deleteBooking(bookingId: string){
     this.http.delete('http://localhost:3000/admin/bookings/delete/' + bookingId)
       .subscribe(() => {
-        console.log("deleted");
+        const updatedBookings = this.bookings.filter(booking => booking.id !== bookingId);
+        this.bookings = updatedBookings;
+        this.bookingsUpdated.next([...this.bookings]);
       });
   }
 
