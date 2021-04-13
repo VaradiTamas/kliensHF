@@ -11,6 +11,7 @@ import {ActivatedRoute, ParamMap} from "@angular/router";
 })
 export class NewBookingComponent implements OnInit{
   booking: Booking;
+  isLoading = false;
   private mode = 'create';
   private bookingId: string;
 
@@ -21,7 +22,20 @@ export class NewBookingComponent implements OnInit{
       if(paramMap.has('id')) {
         this.mode = 'edit';
         this.bookingId = paramMap.get('id');
-        this.booking = this.bookingService.getBooking(this.bookingId);
+        this.isLoading = true;
+        this.bookingService.getBooking(this.bookingId).subscribe(bookingData => {
+          this.isLoading = false;
+          this.booking = {
+            id: bookingData._id,
+            firstName: bookingData.firstName,
+            lastName: bookingData.lastName,
+            numOfChildren: bookingData.numOfChildren,
+            numOfAdults: bookingData.numOfAdults,
+            numOfBedrooms: bookingData.numOfBedrooms,
+            comment: bookingData.comment,
+            isPaid: bookingData.isPaid
+          };
+        });
       }
       else{
         this.mode = 'create';
@@ -31,6 +45,10 @@ export class NewBookingComponent implements OnInit{
   }
 
   onSubmit(form : NgForm){
+    if(form.invalid) {
+      return;
+    }
+    this.isLoading = true;
     const value = form.value;
     const formBooking = {
       id: this.bookingId,
@@ -46,7 +64,6 @@ export class NewBookingComponent implements OnInit{
       this.bookingService.addBooking(formBooking);
     }
     else{
-      console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
       this.bookingService.updateBooking(formBooking);
     }
 

@@ -1,22 +1,25 @@
 <br>
-<div *ngFor="let booking of bookings">
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        {{booking.firstName}} {{booking.lastName}}
-      </mat-panel-title>
-      <a [routerLink]="['/admin/bookings/edit', booking.id]">
-        <img src="assets/icon/edit.svg">
-      </a>
-      <button class="delete" (click)="onDelete(booking.id)">
-        <img src="assets/icon/delete.svg">
-      </button>
-      <mat-panel-description>
-        Currently I am
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <p>I'm visible because I am open</p>
-  </mat-expansion-panel>
-</div>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<div *ngIf="!isLoading">
+  <div *ngFor="let booking of bookings">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{booking.firstName}} {{booking.lastName}}
+        </mat-panel-title>
+        <a [routerLink]="['/admin/bookings/edit', booking.id]">
+          <img src="assets/icon/edit.svg">
+        </a>
+        <button class="delete" (click)="onDelete(booking.id)">
+          <img src="assets/icon/delete.svg">
+        </button>
+        <mat-panel-description>
+          Currently I am
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>I'm visible because I am open</p>
+    </mat-expansion-panel>
+  </div>
 
-<a class="btn btn-primary" href="/admin/bookings/new">Foglalás hozzáadása</a>
+  <a class="btn btn-primary" href="/admin/bookings/new">Foglalás hozzáadása</a>
+</div>

@@ -3,13 +3,14 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Subject} from "rxjs";
 import {map} from "rxjs/operators";
+import {Router} from "@angular/router";
 
 @Injectable({providedIn: 'root'})
 export class BookingService{
   private bookings: Booking[] = [];
   private bookingsUpdated = new Subject<Booking[]>()
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   getBookings(){
     this.http.get<{message: string, bookings: any}>('http://localhost:3000/admin/bookings')
@@ -40,6 +41,7 @@ export class BookingService{
         booking.id = id;
         this.bookings.push(booking);
         this.bookingsUpdated.next([...this.bookings]);
+        this.router.navigate(["/admin/bookings"]);
       });
   }
 
@@ -55,12 +57,26 @@ export class BookingService{
   updateBooking(booking: Booking){
     this.http.put('http://localhost:3000/admin/bookings/edit/' + booking.id, booking)
       .subscribe((responseData)=>{
-        console.log(responseData);
+        const updatedBookings = [...this.bookings];                                     //hogy kliensoldalon is egybol megjelenlen a valtozas
+        const oldBookingIndex = updatedBookings.findIndex(p => p.id === booking.id);
+        updatedBookings[oldBookingIndex] = booking;
+        this.bookings = updatedBookings;
+        this.bookingsUpdated.next([...this.bookings]);
+        this.router.navigate(["/admin/bookings"]);
       });
   }
 
   getBooking(id: string){
-    return {...this.bookings.find(p=> p.id === id)};
+    return this.http.get<{
+      _id: string,
+      firstName: string,
+      lastName: string,
+      numOfChildren: number,
+      numOfAdults: number,
+      numOfBedrooms: number,
+      comment: string,
+      isPaid: boolean
+    }>('http://localhost:3000/admin/bookings/' + id);
   }
 
   getBookingUpdateListener(){
