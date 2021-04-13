@@ -24,7 +24,8 @@ const appRoutes: Routes = [
   { path: 'admin', component: AdminComponent, children: [
       { path: 'bookings', component: BookingsComponent },
       { path: 'coupons', component: CouponsComponent },
-      { path: 'bookings/new', component: NewBookingComponent }
+      { path: 'bookings/new', component: NewBookingComponent },
+      { path: 'bookings/edit/:id', component: NewBookingComponent}
       ]},
 ];
 

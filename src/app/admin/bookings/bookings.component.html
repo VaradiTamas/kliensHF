@@ -5,9 +5,9 @@
       <mat-panel-title>
         {{booking.firstName}} {{booking.lastName}}
       </mat-panel-title>
-      <button>
+      <a [routerLink]="['/admin/bookings/edit', booking.id]">
         <img src="assets/icon/edit.svg">
-      </button>
+      </a>
       <button class="delete" (click)="onDelete(booking.id)">
         <img src="assets/icon/delete.svg">
       </button>

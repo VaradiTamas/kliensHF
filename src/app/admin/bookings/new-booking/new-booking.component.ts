@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from "@angular/forms";
 import {BookingService} from "../../../services/booking.service";
 import {Booking} from "../../../model/booking.model";
+import {ActivatedRoute, ParamMap} from "@angular/router";
 
 @Component({
   selector: 'app-new-booking',
@@ -9,17 +10,30 @@ import {Booking} from "../../../model/booking.model";
   styleUrls: ['./new-booking.component.css']
 })
 export class NewBookingComponent implements OnInit{
-@ViewChild('f', {static: false})
-  newBookingForm: NgForm;
+  booking: Booking;
+  private mode = 'create';
+  private bookingId: string;
 
-  constructor(private bookingService: BookingService) {}
+  constructor(private bookingService: BookingService, public route: ActivatedRoute) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.route.paramMap.subscribe((paramMap:ParamMap) => {
+      if(paramMap.has('id')) {
+        this.mode = 'edit';
+        this.bookingId = paramMap.get('id');
+        this.booking = this.bookingService.getBooking(this.bookingId);
+      }
+      else{
+        this.mode = 'create';
+        this.bookingId = null;
+      }
+    });
+  }
 
   onSubmit(form : NgForm){
     const value = form.value;
-    const newBooking = {
-      id: null,
+    const formBooking = {
+      id: this.bookingId,
       firstName: value.firstName,
       lastName: value.lastName,
       numOfChildren: value.numOfChildren,
@@ -28,7 +42,14 @@ export class NewBookingComponent implements OnInit{
       comment: "hello",
       isPaid: false
     };
-    this.bookingService.addBooking(newBooking);
+    if(this.mode === 'create'){
+      this.bookingService.addBooking(formBooking);
+    }
+    else{
+      console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+      this.bookingService.updateBooking(formBooking);
+    }
+
     form.reset();
   }
 

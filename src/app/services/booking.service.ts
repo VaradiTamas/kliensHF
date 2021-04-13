@@ -52,6 +52,17 @@ export class BookingService{
       });
   }
 
+  updateBooking(booking: Booking){
+    this.http.put('http://localhost:3000/admin/bookings/edit/' + booking.id, booking)
+      .subscribe((responseData)=>{
+        console.log(responseData);
+      });
+  }
+
+  getBooking(id: string){
+    return {...this.bookings.find(p=> p.id === id)};
+  }
+
   getBookingUpdateListener(){
     return this.bookingsUpdated.asObservable();
   }

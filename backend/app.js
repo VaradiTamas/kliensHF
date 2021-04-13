@@ -24,7 +24,7 @@ app.use((req,res,next) => {
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
-    "GET, POST, PATCH, DELETE, OPTIONS"
+    "GET, POST, PATCH, PUT, DELETE, OPTIONS"
   );
   next();
 });
@@ -60,6 +60,23 @@ app.use('/admin/bookings/delete/:id', (req,res,next) => {
   Booking.deleteOne({_id: req.params.id}).then(result => {
     console.log(result);
     res.status(200).json({message: "Booking deleted!"});
+  });
+});
+
+app.put('/admin/bookings/edit/:id', (req,res,next) => {
+  const booking = new Booking({
+    _id: req.body.id,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    numOfChildren: req.body.numOfChildren,
+    numOfAdults: req.body.numOfAdults,
+    numOfBedrooms: req.body.numOfBedrooms,
+    comment: req.body.comment,
+    isPaid: req.body.isPaid
+  });
+  Booking.updateOne({_id: req.params.id}, booking).then(result => {
+    console.log(result);
+    res.status(200).json({message: 'Update successful!'});
   });
 });
 
