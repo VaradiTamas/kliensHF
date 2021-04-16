@@ -78,7 +78,12 @@
   <div class="form-group row mb-5">
     <label class="col-sm-2 col-form-label" for="email">E-mail cím: </label>
     <div class="col-6">
-      <input type="text" class="form-control" id="email" placeholder="example@gmail.com">
+      <input
+        type="text"
+        class="form-control"
+        id="email"
+        placeholder="example@gmail.com"
+        name="email">
     </div>
     <label class="col-sm-2 col-form-label ml-4" for="numOfBedrooms">Hálószobák száma:</label>
     <div class="col-1">
@@ -94,5 +99,46 @@
         required>
     </div>
   </div>
-  <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Megerősítés</button>
+  <div class="form-group row mb-5">
+    <label class="col-1 col-form-label" for="country">Ország: </label>
+    <div class="col-2">
+      <input
+        type="text"
+        class="form-control"
+        id="country"
+        placeholder="Magyarország"
+        name="country">
+    </div>
+    <label class="col-1 col-form-label" for="postcode">Irányítószám:</label>
+    <div class="col-1">
+      <input
+        name="postcode"
+        type="number"
+        min="1"
+        step="1"
+        class="form-control"
+        id="postcode">
+    </div>
+    <label class="col-1 col-form-label" for="city">Település neve:</label>
+    <div class="col-2">
+      <input
+        name="city"
+        type="text"
+        class="form-control"
+        id="city">
+    </div>
+  <label class="col-1 col-form-label pl-5" for="address">Cím:</label>
+  <div class="col-3 pr-5">
+    <input
+      name="address"
+      type="text"
+      class="form-control"
+      id="address">
+  </div>
+  </div>
+  <div class="col-3 form-check" >
+    <input class="form-check-input" type="checkbox" value="" id="isPaid" name="isPaid">
+    <label class="form-check-label" for="isPaid">Fizetve</label>
+  </div>
+  <button type="submit" class="btn btn-primary mt-3" [disabled]="!f.valid">Megerősítés</button>
 </form>
