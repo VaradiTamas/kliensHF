@@ -3,10 +3,11 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
 const bookingsRoutes = require("./routes/bookings");
+const vouchersRoutes = require("./routes/vouchers");
 
 const app = express();
 
-mongoose.connect("mongodb+srv://fahazfoglalo:ChsgicCcXqDvda26@cluster0.vyq6f.mongodb.net/firstDatabase?retryWrites=true&w=majority", {useNewUrlParser: true})
+mongoose.connect("mongodb+srv://fahazfoglalo:ChsgicCcXqDvda26@cluster0.vyq6f.mongodb.net/firstDatabase?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology: true})
   .then(()=>{
     console.log('Connected to database!');
   })
@@ -31,5 +32,6 @@ app.use((req,res,next) => {
 });
 
 app.use("/admin/bookings", bookingsRoutes);
+app.use("/admin/vouchers", vouchersRoutes);
 
 module.exports = app;

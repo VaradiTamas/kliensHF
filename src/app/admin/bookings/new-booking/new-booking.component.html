@@ -46,7 +46,7 @@
           step="1"
           class="form-control"
           id="numOfAdults"
-          [ngModel]="booking?.numOfAdults"
+          [ngModel]="booking == null ? 2 : booking.numOfAdults"
           required>
       </div>
     </div>
@@ -70,7 +70,7 @@
           max="4"
           class="form-control"
           id="numOfChildren"
-          [ngModel]="booking?.numOfChildren"
+          [ngModel]="booking == null ? 0 : booking.numOfChildren"
           required>
       </div>
     </div>
@@ -90,7 +90,7 @@
           step="1"
           class="form-control"
           id="numOfBedRooms"
-          [ngModel]="booking?.numOfBedrooms"
+          [ngModel]="booking == null ? 1 : booking.numOfBedrooms"
           required>
       </div>
     </div>

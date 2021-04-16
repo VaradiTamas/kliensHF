@@ -1,1 +1,25 @@
-<p>coupons works!</p>
+<br>
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<div *ngIf="!isLoading">
+  <div *ngFor="let voucher of vouchers">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{voucher.firstName}} {{voucher.lastName}}
+        </mat-panel-title>
+        <a [routerLink]="['/admin/vouchers/edit', voucher.id]">
+          <img src="assets/icon/edit.svg">
+        </a>
+        <button class="delete" (click)="onDelete(voucher.id)">
+          <img src="assets/icon/delete.svg">
+        </button>
+        <mat-panel-description>
+          Currently I am
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>blabla</p>
+    </mat-expansion-panel>
+  </div>
+
+  <a class="btn btn-primary" href="/admin/vouchers/new">Utalvány hozzáadása</a>
+</div>

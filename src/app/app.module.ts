@@ -25,6 +25,7 @@ import { NavbarComponent } from './admin/navbar/navbar.component';
 import { CouponsComponent } from './admin/coupons/coupons.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NewBookingComponent } from './admin/bookings/new-booking/new-booking.component';
+import { NewCouponComponent } from './admin/coupons/new-coupon/new-coupon.component';
 
 @NgModule({
   imports: [
@@ -55,7 +56,8 @@ import { NewBookingComponent } from './admin/bookings/new-booking/new-booking.co
     BookingsComponent,
     NavbarComponent,
     CouponsComponent,
-    NewBookingComponent
+    NewBookingComponent,
+    NewCouponComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

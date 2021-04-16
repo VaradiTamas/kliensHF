@@ -11,6 +11,7 @@ import {AdminComponent} from "./admin/admin.component";
 import {BookingsComponent} from "./admin/bookings/bookings.component";
 import {CouponsComponent} from "./admin/coupons/coupons.component";
 import {NewBookingComponent} from "./admin/bookings/new-booking/new-booking.component";
+import {NewCouponComponent} from "./admin/coupons/new-coupon/new-coupon.component";
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/gallery', pathMatch: 'full' },
@@ -23,9 +24,11 @@ const appRoutes: Routes = [
   { path: 'reservation', component: ReservationComponent},
   { path: 'admin', component: AdminComponent, children: [
       { path: 'bookings', component: BookingsComponent },
-      { path: 'coupons', component: CouponsComponent },
+      { path: 'vouchers', component: CouponsComponent },
       { path: 'bookings/new', component: NewBookingComponent },
-      { path: 'bookings/edit/:id', component: NewBookingComponent}
+      { path: 'bookings/edit/:id', component: NewBookingComponent},
+      { path: 'vouchers/new', component: NewCouponComponent },
+      { path: 'vouchers/edit/:id', component: NewCouponComponent}
       ]},
 ];
 
