@@ -4,23 +4,24 @@
     <label class="col-sm-2 col-form-label" for="lastName">Vezetéknév: </label>
     <div class="col-6">
       <input type="text"
-             name="lastName"
-             class="form-control"
-             id="lastName"
-             [ngModel] = "voucher?.lastName"
-             required
-             placeholder="Nagy">
+         name="lastName"
+         class="form-control"
+         id="lastName"
+         [ngModel] = "voucher?.lastName"
+         required
+         placeholder="Nagy">
     </div>
 
     <label class="col-sm-2 col-form-label ml-4" for="numOfNights">Éjszakák száma:</label>
     <div class="col-1">
       <input
         type="number"
+        name="numOfNights"
         min="1"
         step="1"
         class="form-control"
-        id="numOfNights"
-      >
+        [ngModel] = "voucher?.numOfNights"
+        id="numOfNights">
     </div>
   </div>
 
@@ -36,6 +37,7 @@
         [ngModel]="voucher?.firstName"
         required>
     </div>
+
     <label class="col-sm-2 col-form-label ml-4" for="numOfAdults">Felnőttek száma:</label>
     <div class="col-1">
       <input
@@ -52,14 +54,17 @@
   </div>
 
   <div class="form-group row mb-5">
-    <label class="col-sm-2 col-form-label" for="mobileNum">Telefonszám: </label>
+    <label class="col-sm-2 col-form-label" for="tel">Telefonszám: </label>
     <div class="col-6">
       <input
+        name="tel"
         type="text"
         class="form-control"
-        id="mobileNum"
+        id="tel"
+        [ngModel]="voucher?.tel"
         placeholder="06201236547">
     </div>
+
     <label class="col-sm-2 col-form-label ml-4" for="numOfChildren">Gyerekek száma:</label>
     <div class="col-1">
       <input
@@ -79,11 +84,12 @@
     <label class="col-sm-2 col-form-label" for="email">E-mail cím: </label>
     <div class="col-6">
       <input
+        name="email"
         type="text"
         class="form-control"
         id="email"
         placeholder="example@gmail.com"
-        name="email">
+        [ngModel]="voucher?.email">
     </div>
     <label class="col-sm-2 col-form-label ml-4" for="numOfBedrooms">Hálószobák száma:</label>
     <div class="col-1">
@@ -103,11 +109,12 @@
     <label class="col-1 col-form-label" for="country">Ország: </label>
     <div class="col-2">
       <input
+        name="country"
         type="text"
         class="form-control"
         id="country"
         placeholder="Magyarország"
-        name="country">
+        [ngModel]="voucher?.country">
     </div>
     <label class="col-1 col-form-label" for="postcode">Irányítószám:</label>
     <div class="col-1">
@@ -117,7 +124,8 @@
         min="1"
         step="1"
         class="form-control"
-        id="postcode">
+        id="postcode"
+        [ngModel]="voucher?.postcode">
     </div>
     <label class="col-1 col-form-label" for="city">Település neve:</label>
     <div class="col-2">
@@ -125,7 +133,8 @@
         name="city"
         type="text"
         class="form-control"
-        id="city">
+        id="city"
+        [ngModel]="voucher?.city">
     </div>
   <label class="col-1 col-form-label pl-5" for="address">Cím:</label>
   <div class="col-3 pr-5">
@@ -133,7 +142,8 @@
       name="address"
       type="text"
       class="form-control"
-      id="address">
+      id="address"
+      [ngModel]="voucher?.address">
   </div>
   </div>
   <div class="col-3 form-check" >

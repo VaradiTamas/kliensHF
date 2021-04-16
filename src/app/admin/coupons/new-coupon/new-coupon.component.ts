@@ -30,9 +30,16 @@ export class NewCouponComponent implements OnInit {
             id: voucherData._id,
             firstName: voucherData.firstName,
             lastName: voucherData.lastName,
+            tel: voucherData.tel,
+            email: voucherData.email,
+            numOfNights: voucherData.numOfNights,
             numOfChildren: voucherData.numOfChildren,
             numOfAdults: voucherData.numOfAdults,
             numOfBedrooms: voucherData.numOfBedrooms,
+            country: voucherData.country,
+            postcode: voucherData.postcode,
+            city: voucherData.city,
+            address: voucherData.address,
             isPaid: voucherData.isPaid
           };
         });
@@ -54,9 +61,16 @@ export class NewCouponComponent implements OnInit {
       id: this.voucherId,
       firstName: value.firstName,
       lastName: value.lastName,
+      tel: value.tel,
+      email: value.email,
+      numOfNights: value.numOfNights,
       numOfChildren: value.numOfChildren,
       numOfAdults: value.numOfAdults,
       numOfBedrooms: value.numOfBedrooms,
+      country: value.country,
+      postcode: value.postcode,
+      city: value.city,
+      address: value.address,
       isPaid: false
     };
     if(this.mode === 'create'){

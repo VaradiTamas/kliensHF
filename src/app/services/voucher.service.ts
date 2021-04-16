@@ -19,9 +19,16 @@ export class VoucherService{
           return {
             firstName: voucher.firstName,
             lastName: voucher.lastName,
+            tel: voucher.tel,
+            email: voucher.email,
+            numOfNights: voucher.numOfNights,
             numOfChildren: voucher.numOfChildren,
             numOfAdults: voucher.numOfAdults,
             numOfBedrooms: voucher.numOfBedrooms,
+            country: voucher.country,
+            postcode: voucher.postcode,
+            city: voucher.city,
+            address: voucher.address,
             isPaid: voucher.isPaid,
             id: voucher._id,
           };
@@ -70,10 +77,17 @@ export class VoucherService{
       _id: string,
       firstName: string,
       lastName: string,
+      email: string,
+      tel: string,
       numOfChildren: number,
       numOfAdults: number,
       numOfBedrooms: number,
-      isPaid: boolean
+      numOfNights: number,
+      country: string,
+      postcode: number,
+      city: string,
+      address: string,
+      isPaid: boolean,
     }>('http://localhost:3000/admin/vouchers/' + id);
   }
 
