@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Voucher = require('../models/voucher');
+const mongoose = require("mongoose");
 
 router.post('', (req,res,next) => {
   const voucher = new Voucher({
@@ -66,7 +67,7 @@ router.put('/edit/:id', (req,res,next) => {
 });
 
 router.get('/:id', (req,res,next) => {
-  Voucher.findById(req.params.id).then(voucher => {
+  Voucher.findById(mongoose.Types.ObjectId(req.params.id)).then(voucher => {
     if(voucher){
       res.status(200).json(voucher);
     } else{

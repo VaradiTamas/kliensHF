@@ -5,19 +5,98 @@
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          {{voucher.firstName}} {{voucher.lastName}}
+          <div class="col-2">
+            Sorszám:
+          </div>
+          <div class="col-5 mr-4">
+            {{voucher.id}}
+          </div>
+          <div class="col-1">
+            Név:
+          </div>
+          <div class="col-6">
+            {{voucher.firstName}} {{voucher.lastName}}
+          </div>
         </mat-panel-title>
+        <div class="col-6">
+          <mat-panel-description>
+            <div class="col-1">
+              Tel:
+            </div>
+            <div class="col-2">
+              {{voucher.tel}}
+            </div>
+            <div class="col-2 pl-4 ml-4">
+              E-mail:
+            </div>
+            <div class="col-3">
+              {{voucher.email}}
+            </div>
+          </mat-panel-description>
+        </div>
+        <div *ngIf="voucher.isPaid" class="col-1 isPaid">
+          Fizetve
+        </div>
+        <div *ngIf="!voucher.isPaid" class="col-1 notPaid">
+          Nincs fizetve
+        </div>
         <a [routerLink]="['/admin/vouchers/edit', voucher.id]">
           <img src="assets/icon/edit.svg">
         </a>
         <button class="delete" (click)="onDelete(voucher.id)">
           <img src="assets/icon/delete.svg">
         </button>
-        <mat-panel-description>
-          Currently I am
-        </mat-panel-description>
       </mat-expansion-panel-header>
-      <p>blabla</p>
+      <div class="row">
+        <div class="col-1 address">
+          Cím:
+        </div>
+        <div class="col-4">
+          <div class="row">
+            <div class="col-12">
+              {{voucher.country}}
+            </div>
+            <div class="col-12">
+              {{voucher.postcode}} {{voucher.city}}, {{voucher.address}}
+            </div>
+          </div>
+        </div>
+        <div class="col-1 details">
+          Adatok:
+        </div>
+        <div class="col-2">
+          <div class="row">
+            <div class="col-8 pl-4">
+              Éjszakák száma:
+            </div>
+            <div class="col-4 pl-2">
+              {{voucher.numOfNights}}
+            </div>
+            <div class="col-8 pl-4">
+              Hálószobák száma:
+            </div>
+            <div class="col-4 pl-2">
+              {{voucher.numOfBedrooms}}
+            </div>
+          </div>
+        </div>
+        <div class="col-2">
+          <div class="row">
+            <div class="col-8 pl-4">
+              Felnőttek száma:
+            </div>
+            <div class="col-4 pl-2">
+              {{voucher.numOfAdults}}
+            </div>
+            <div class="col-8 pl-4">
+              Gyerekek száma:
+            </div>
+            <div class="col-4 pl-2">
+              {{voucher.numOfChildren}}
+            </div>
+          </div>
+        </div>
+      </div>
     </mat-expansion-panel>
   </div>
 

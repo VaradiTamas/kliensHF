@@ -71,7 +71,7 @@ export class NewCouponComponent implements OnInit {
       postcode: value.postcode,
       city: value.city,
       address: value.address,
-      isPaid: false
+      isPaid: value.isPaid
     };
     if(this.mode === 'create'){
       this.voucherService.addVoucher(formVoucher);

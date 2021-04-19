@@ -20,7 +20,7 @@
         min="1"
         step="1"
         class="form-control"
-        [ngModel] = "voucher?.numOfNights"
+        [ngModel] = "voucher == null ? 2 : voucher.numOfNights"
         id="numOfNights">
     </div>
   </div>
@@ -147,7 +147,12 @@
   </div>
   </div>
   <div class="col-3 form-check" >
-    <input class="form-check-input" type="checkbox" value="" id="isPaid" name="isPaid">
+    <input
+      name="isPaid"
+      class="form-check-input"
+      type="checkbox"
+      [ngModel]="voucher?.isPaid"
+      id="isPaid">
     <label class="form-check-label" for="isPaid">Fizetve</label>
   </div>
   <button type="submit" class="btn btn-primary mt-3" [disabled]="!f.valid">Megerősítés</button>

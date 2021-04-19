@@ -3,6 +3,8 @@ import {NgForm} from "@angular/forms";
 import {BookingService} from "../../../services/booking.service";
 import {Booking} from "../../../model/booking.model";
 import {ActivatedRoute, ParamMap} from "@angular/router";
+import {Voucher} from "../../../model/voucher.model";
+import {VoucherService} from "../../../services/voucher.service";
 
 @Component({
   selector: 'app-new-booking',
@@ -11,11 +13,13 @@ import {ActivatedRoute, ParamMap} from "@angular/router";
 })
 export class NewBookingComponent implements OnInit{
   booking: Booking;
+  voucher: Voucher;
   isLoading = false;
+  isVoucherValid = false;
   private mode = 'create';
   private bookingId: string;
 
-  constructor(private bookingService: BookingService, public route: ActivatedRoute) {}
+  constructor(private bookingService: BookingService, private voucherService: VoucherService, public route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe((paramMap:ParamMap) => {
@@ -29,11 +33,17 @@ export class NewBookingComponent implements OnInit{
             id: bookingData._id,
             firstName: bookingData.firstName,
             lastName: bookingData.lastName,
+            email: bookingData.email,
+            tel: bookingData.tel,
             numOfChildren: bookingData.numOfChildren,
             numOfAdults: bookingData.numOfAdults,
             numOfBedrooms: bookingData.numOfBedrooms,
             comment: bookingData.comment,
-            isPaid: bookingData.isPaid
+            isPaid: bookingData.isPaid,
+            voucherId: bookingData.voucherId,
+            from: bookingData.from,
+            to: bookingData.to,
+            offerName: bookingData.offerName
           };
         });
       }
@@ -54,11 +64,17 @@ export class NewBookingComponent implements OnInit{
       id: this.bookingId,
       firstName: value.firstName,
       lastName: value.lastName,
+      email: value.email,
+      tel: value.tel,
       numOfChildren: value.numOfChildren,
       numOfAdults: value.numOfAdults,
       numOfBedrooms: value.numOfBedrooms,
-      comment: "hello",
-      isPaid: false
+      comment: value.comment,
+      isPaid: value.isPaid,
+      voucherId: this.voucher.id,
+      from: value.from,
+      to: value.to,
+      offerName: value.offerName
     };
     if(this.mode === 'create'){
       this.bookingService.addBooking(formBooking);
@@ -68,6 +84,35 @@ export class NewBookingComponent implements OnInit{
     }
 
     form.reset();
+  }
+
+  onCheckVoucher(form : NgForm){
+    const value = form.value;
+    this.voucherService.getVoucher(value.voucherId).subscribe(voucherData => {
+      this.voucher = {
+        id: voucherData._id,
+        firstName: voucherData.firstName,
+        lastName: voucherData.lastName,
+        tel: voucherData.tel,
+        email: voucherData.email,
+        numOfNights: voucherData.numOfNights,
+        numOfChildren: voucherData.numOfChildren,
+        numOfAdults: voucherData.numOfAdults,
+        numOfBedrooms: voucherData.numOfBedrooms,
+        country: voucherData.country,
+        postcode: voucherData.postcode,
+        city: voucherData.city,
+        address: voucherData.address,
+        isPaid: voucherData.isPaid
+      };
+    });
+    if(this.voucher!==null){
+      this.isVoucherValid = true;
+    }
+    else{
+      this.isVoucherValid = false;
+    }
+    console.log(value.voucherId);
   }
 
   /*onClear() {

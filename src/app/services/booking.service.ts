@@ -19,12 +19,18 @@ export class BookingService{
           return {
             firstName: booking.firstName,
             lastName: booking.lastName,
+            email: booking.email,
+            tel: booking.tel,
             numOfChildren: booking.numOfChildren,
             numOfAdults: booking.numOfAdults,
             numOfBedrooms: booking.numOfBedrooms,
             comment: booking.comment,
             isPaid: booking.isPaid,
             id: booking._id,
+            voucherId: booking.voucherId,
+            from: booking.from,
+            to: booking.to,
+            offerName: booking.offerName
           };
         });
       }))
@@ -69,8 +75,14 @@ export class BookingService{
   getBooking(id: string){
     return this.http.get<{
       _id: string,
+      voucherId: string,
       firstName: string,
       lastName: string,
+      email: string,
+      tel: string,
+      from: string,
+      to: string,
+      offerName: string,
       numOfChildren: number,
       numOfAdults: number,
       numOfBedrooms: number,
