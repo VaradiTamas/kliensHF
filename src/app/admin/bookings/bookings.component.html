@@ -23,3 +23,10 @@
 
   <a class="btn btn-primary" href="/admin/bookings/new">Foglalás hozzáadása</a>
 </div>
+<mat-paginator
+  *ngIf="bookings.length > 0"
+  [length]="totalBookings"
+  [pageSize]="bookingsPerPage"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="onChangedPage($event)">
+</mat-paginator>

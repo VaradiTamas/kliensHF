@@ -8,14 +8,15 @@ import {Router} from "@angular/router";
 @Injectable({providedIn: 'root'})
 export class BookingService{
   private bookings: Booking[] = [];
-  private bookingsUpdated = new Subject<Booking[]>()
+  private bookingsUpdated = new Subject<{bookings: Booking[], bookingCount: number}>()
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  getBookings(){
-    this.http.get<{message: string, bookings: any}>('http://localhost:3000/admin/bookings')
+  getBookings(bookingsPerPage: number, currentPage: number){
+    const queryParams = `?pagesize=${bookingsPerPage}&page=${currentPage}`;
+    this.http.get<{message: string, bookings: any, maxBookings: number}>('http://localhost:3000/admin/bookings' + queryParams)
       .pipe(map((serverBookings) => {
-        return serverBookings.bookings.map(booking => {
+        return { bookings: serverBookings.bookings.map(booking => {
           return {
             firstName: booking.firstName,
             lastName: booking.lastName,
@@ -32,42 +33,31 @@ export class BookingService{
             to: booking.to,
             offerName: booking.offerName
           };
-        });
+        }), maxBookings: serverBookings.maxBookings};
       }))
-      .subscribe((transformedBookings)=>{
-        this.bookings = transformedBookings;
-        this.bookingsUpdated.next([...this.bookings]);
+      .subscribe((transformedBookingsData)=>{
+        this.bookings = transformedBookingsData.bookings;
+        this.bookingsUpdated.next({
+          bookings: [...this.bookings],
+          bookingCount: transformedBookingsData.maxBookings
+        });
       });
   }
 
   addBooking(booking: Booking){
     this.http.post<{message: string, bookingId: string}>('http://localhost:3000/admin/bookings', booking)
       .subscribe((responseData)=>{
-        const id = responseData.bookingId;
-        booking.id = id;
-        this.bookings.push(booking);
-        this.bookingsUpdated.next([...this.bookings]);
         this.router.navigate(["/admin/bookings"]);
       });
   }
 
   deleteBooking(bookingId: string){
-    this.http.delete('http://localhost:3000/admin/bookings/delete/' + bookingId)
-      .subscribe(() => {
-        const updatedBookings = this.bookings.filter(booking => booking.id !== bookingId);
-        this.bookings = updatedBookings;
-        this.bookingsUpdated.next([...this.bookings]);
-      });
+    return this.http.delete('http://localhost:3000/admin/bookings/delete/' + bookingId);
   }
 
   updateBooking(booking: Booking){
     this.http.put('http://localhost:3000/admin/bookings/edit/' + booking.id, booking)
       .subscribe((responseData)=>{
-        const updatedBookings = [...this.bookings];                                     //hogy kliensoldalon is egybol megjelenlen a valtozas
-        const oldBookingIndex = updatedBookings.findIndex(p => p.id === booking.id);
-        updatedBookings[oldBookingIndex] = booking;
-        this.bookings = updatedBookings;
-        this.bookingsUpdated.next([...this.bookings]);
         this.router.navigate(["/admin/bookings"]);
       });
   }

@@ -27,12 +27,27 @@ router.post('', (req,res,next) => {
 });
 
 router.get('', (req,res,next) => {
-  Booking.find().then(bookings => {
-    res.status(200).json({
-      message: "Bookings fetched successfully!",
-      bookings: bookings
-    });
-  });
+  const pageSize = +req.query.pagesize;
+  const currentPage = +req.query.page;
+  const bookingQuery = Booking.find();
+  let fetchedBookings;
+  if(pageSize && currentPage){
+    bookingQuery
+      .skip(pageSize * (currentPage - 1))
+      .limit(pageSize);
+  }
+  bookingQuery
+    .then(bookings => {
+      fetchedBookings = bookings;
+      return Booking.count();
+    })
+    .then(count => {
+      res.status(200).json({
+        message: "Bookings fetched successfully!",
+        bookings: fetchedBookings,
+        maxBookings: count
+      });
+    })
 });
 
 router.use('/delete/:id', (req,res,next) => {

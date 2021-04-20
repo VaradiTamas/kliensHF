@@ -71,7 +71,7 @@ export class NewBookingComponent implements OnInit{
       numOfBedrooms: value.numOfBedrooms,
       comment: value.comment,
       isPaid: value.isPaid,
-      voucherId: this.voucher.id,
+      voucherId: this.voucher?.id,
       from: value.from,
       to: value.to,
       offerName: value.offerName
