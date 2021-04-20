@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
+import { HeaderComponent } from './layout/app-header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GalleryComponent } from './gallery/gallery.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -18,17 +18,11 @@ import { DatePickerComponent } from './reservation/date-picker/date-picker.compo
 import {MaterialModule} from "./material.module";
 import {AppRoutingModule} from "./app-routing.module";
 import { HomeComponent } from './home/home.component';
-import { AdminComponent } from './admin/admin.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import { BookingsComponent } from './admin/bookings/bookings.component';
-import { NavbarComponent } from './admin/navbar/navbar.component';
-import { CouponsComponent } from './admin/coupons/coupons.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NewBookingComponent } from './admin/bookings/new-booking/new-booking.component';
-import { NewCouponComponent } from './admin/coupons/new-coupon/new-coupon.component';
-import { DatepickerComponent } from './datepicker/datepicker.component';
-import { LoginComponent } from './admin/auth/login/login.component';
 import {AuthInterceptor} from "./admin/auth/auth-interceptor";
+import {AdminModule} from "./admin/admin.module";
+import { AppLayoutComponent } from './layout/app-layout/app-layout.component';
 
 @NgModule({
   imports: [
@@ -39,7 +33,8 @@ import {AuthInterceptor} from "./admin/auth/auth-interceptor";
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AdminModule
   ],
   declarations: [
     AppComponent,
@@ -55,14 +50,7 @@ import {AuthInterceptor} from "./admin/auth/auth-interceptor";
     VoucherManagingComponent,
     DatePickerComponent,
     HomeComponent,
-    AdminComponent,
-    BookingsComponent,
-    NavbarComponent,
-    CouponsComponent,
-    NewBookingComponent,
-    NewCouponComponent,
-    DatepickerComponent,
-    LoginComponent,
+    AppLayoutComponent
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
