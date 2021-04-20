@@ -12,6 +12,8 @@ import {BookingsComponent} from "./admin/bookings/bookings.component";
 import {CouponsComponent} from "./admin/coupons/coupons.component";
 import {NewBookingComponent} from "./admin/bookings/new-booking/new-booking.component";
 import {NewCouponComponent} from "./admin/coupons/new-coupon/new-coupon.component";
+import {LoginComponent} from "./admin/auth/login/login.component";
+import {AuthGuard} from "./admin/auth/auth.guard";
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/gallery', pathMatch: 'full' },
@@ -23,17 +25,19 @@ const appRoutes: Routes = [
   { path: 'about-us', component: AboutusComponent},
   { path: 'reservation', component: ReservationComponent},
   { path: 'admin', component: AdminComponent, children: [
-      { path: 'bookings', component: BookingsComponent },
-      { path: 'vouchers', component: CouponsComponent },
-      { path: 'bookings/new', component: NewBookingComponent },
-      { path: 'bookings/edit/:id', component: NewBookingComponent},
-      { path: 'vouchers/new', component: NewCouponComponent },
-      { path: 'vouchers/edit/:id', component: NewCouponComponent}
+      { path: 'bookings', component: BookingsComponent, canActivate: [AuthGuard] },
+      { path: 'vouchers', component: CouponsComponent, canActivate: [AuthGuard] },
+      { path: 'bookings/new', component: NewBookingComponent, canActivate: [AuthGuard] },
+      { path: 'bookings/edit/:id', component: NewBookingComponent, canActivate: [AuthGuard]},
+      { path: 'vouchers/new', component: NewCouponComponent, canActivate: [AuthGuard] },
+      { path: 'vouchers/edit/:id', component: NewCouponComponent, canActivate: [AuthGuard]},
+      { path: 'login', component: LoginComponent},
       ]},
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule {}

@@ -19,7 +19,7 @@ import {MaterialModule} from "./material.module";
 import {AppRoutingModule} from "./app-routing.module";
 import { HomeComponent } from './home/home.component';
 import { AdminComponent } from './admin/admin.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { BookingsComponent } from './admin/bookings/bookings.component';
 import { NavbarComponent } from './admin/navbar/navbar.component';
 import { CouponsComponent } from './admin/coupons/coupons.component';
@@ -27,6 +27,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NewBookingComponent } from './admin/bookings/new-booking/new-booking.component';
 import { NewCouponComponent } from './admin/coupons/new-coupon/new-coupon.component';
 import { DatepickerComponent } from './datepicker/datepicker.component';
+import { LoginComponent } from './admin/auth/login/login.component';
+import {AuthInterceptor} from "./admin/auth/auth-interceptor";
 
 @NgModule({
   imports: [
@@ -59,9 +61,10 @@ import { DatepickerComponent } from './datepicker/datepicker.component';
     CouponsComponent,
     NewBookingComponent,
     NewCouponComponent,
-    DatepickerComponent
+    DatepickerComponent,
+    LoginComponent,
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

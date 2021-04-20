@@ -3,6 +3,7 @@ import {BookingService} from "../../services/booking.service";
 import {Booking} from "../../model/booking.model";
 import {Subscription} from "rxjs";
 import {PageEvent} from "@angular/material/paginator";
+import {AuthService} from "../auth/auth.service";
 
 @Component({
   selector: 'app-bookings',
@@ -16,9 +17,11 @@ export class BookingsComponent implements OnInit, OnDestroy {
   bookingsPerPage = 2;
   currentPage = 1;
   pageSizeOptions = [1, 2, 5, 10];
+  userIsAuthenticated = false;
   private bookinsSubscription: Subscription;
+  private authSubscription: Subscription;
 
-  constructor(public bookingService: BookingService) { }
+  constructor(public bookingService: BookingService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -29,6 +32,12 @@ export class BookingsComponent implements OnInit, OnDestroy {
         this.totalBookings = bookingData.bookingCount;
         this.bookings = bookingData.bookings;
     });
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.authSubscription = this.authService
+      .getAuthStatusListener()
+      .subscribe(isAuthenticated => {
+        this.userIsAuthenticated = isAuthenticated;
+      });
   }
 
   onChangedPage(pageData: PageEvent){
@@ -47,5 +56,6 @@ export class BookingsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.bookinsSubscription.unsubscribe();
+    this.authSubscription.unsubscribe();
   }
 }

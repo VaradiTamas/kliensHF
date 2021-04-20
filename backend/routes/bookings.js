@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
+const checkAuth = require("../middleware/check-auth");
 const Booking = require('../models/booking');
 
-router.post('', (req,res,next) => {
+router.post('', checkAuth, (req,res,next) => {
   const booking = new Booking({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -26,7 +27,7 @@ router.post('', (req,res,next) => {
   });
 });
 
-router.get('', (req,res,next) => {
+router.get('', checkAuth, (req,res,next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   const bookingQuery = Booking.find();
@@ -50,14 +51,14 @@ router.get('', (req,res,next) => {
     })
 });
 
-router.use('/delete/:id', (req,res,next) => {
+router.use('/delete/:id', checkAuth, (req,res,next) => {
   Booking.deleteOne({_id: req.params.id}).then(result => {
     console.log(result);
     res.status(200).json({message: "Booking deleted!"});
   });
 });
 
-router.put('/edit/:id', (req,res,next) => {
+router.put('/edit/:id', checkAuth, (req,res,next) => {
   const booking = new Booking({
     _id: req.body.id,
     firstName: req.body.firstName,
@@ -80,7 +81,7 @@ router.put('/edit/:id', (req,res,next) => {
   });
 });
 
-router.get('/:id', (req,res,next) => {
+router.get('/:id', checkAuth, (req,res,next) => {
   Booking.findById(req.params.id).then(booking => {
     if(booking){
       res.status(200).json(booking);
