@@ -16,6 +16,7 @@ export class NewBookingComponent implements OnInit{
   voucher: Voucher;
   isLoading = false;
   isVoucherValid = false;
+  alreadyCheckedVoucher = false;
   private mode = 'create';
   private bookingId: string;
 
@@ -106,13 +107,13 @@ export class NewBookingComponent implements OnInit{
         isPaid: voucherData.isPaid
       };
     });
-    if(this.voucher!==null){
+    if(this.voucher.id == value.voucherId){
       this.isVoucherValid = true;
     }
     else{
       this.isVoucherValid = false;
     }
-    console.log(value.voucherId);
+    this.alreadyCheckedVoucher = true;
   }
 
   /*onClear() {

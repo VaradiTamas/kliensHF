@@ -3,7 +3,6 @@ import {BookingService} from "../../services/booking.service";
 import {Booking} from "../../model/booking.model";
 import {Subscription} from "rxjs";
 import {PageEvent} from "@angular/material/paginator";
-import {AuthService} from "../auth/auth.service";
 
 @Component({
   selector: 'app-bookings',
@@ -14,7 +13,7 @@ export class BookingsComponent implements OnInit, OnDestroy {
   bookings: Booking[] = [];
   isLoading = false;
   totalBookings = 0;
-  bookingsPerPage = 2;
+  bookingsPerPage = 5;
   currentPage = 1;
   pageSizeOptions = [1, 2, 5, 10];
   private bookinsSubscription: Subscription;
