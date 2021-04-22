@@ -42,6 +42,8 @@ export class BookingsComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.bookingService.deleteBooking(bookingId).subscribe(() => {
       this.bookingService.getBookings(this.bookingsPerPage, this.currentPage);
+    }, () => {
+      this.isLoading = false;
     })
   }
 

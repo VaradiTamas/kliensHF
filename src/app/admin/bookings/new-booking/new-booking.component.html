@@ -7,7 +7,8 @@
         name="from"
         type="date"
         id="from"
-        [ngModel] = "booking?.from |  date:'yyyy-MM-dd'">
+        [ngModel] = "booking?.from |  date:'yyyy-MM-dd'"
+        required>
     </div>
     <div class="col-4">
       <label for="to">Meddig:</label>
@@ -15,7 +16,8 @@
         name="to"
         type="date"
         id="to"
-        [ngModel] = "booking?.to |  date:'yyyy-MM-dd'">
+        [ngModel] = "booking?.to |  date:'yyyy-MM-dd'"
+        required>
     </div>
   </div>
   <div class="row mb-5">
@@ -28,8 +30,12 @@
         type="text"
         [ngModel]="booking?.voucherId">
     </div>
-    <span *ngIf="alreadyCheckedVoucher && isVoucherValid">jo</span>
-    <span *ngIf="alreadyCheckedVoucher && !isVoucherValid">nemjo</span>
+    <span *ngIf="alreadyCheckedVoucher && isVoucherValid">
+      <img src="assets/icon/done.svg">
+    </span>
+    <span *ngIf="alreadyCheckedVoucher && !isVoucherValid">
+      <img src="assets/icon/wrong.svg">
+    </span>
     <a class="btn btn-primary ml-4" (click)="onCheckVoucher(f)">Ellenőrzés</a>
   </div>
   <div class="form-group row mb-5">
@@ -92,7 +98,8 @@
         class="form-control"
         id="tel"
         [ngModel]="booking?.tel"
-        placeholder="06201236547">
+        placeholder="06201236547"
+        required>
     </div>
     <label class="col-sm-2 col-form-label ml-4" for="numOfChildren">Gyerekek száma:</label>
     <div class="col-1">
@@ -118,7 +125,8 @@
         class="form-control"
         id="email"
         [ngModel]="booking?.email"
-        placeholder="example@gmail.com">
+        placeholder="example@gmail.com"
+        required>
     </div>
     <label class="col-sm-2 col-form-label ml-4" for="numOfBedrooms">Hálószobák száma:</label>
     <div class="col-1">
@@ -144,7 +152,7 @@
       cols="120">
     </textarea>
   </div>
-  <div class="col-3 form-check" >
+  <div class="col-3 form-check mt-5" >
     <input
       name="isPaid"
       class="form-check-input"
@@ -153,5 +161,6 @@
       id="isPaid">
     <label class="form-check-label" for="isPaid">Fizetve</label>
   </div>
- <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Megerősítés</button>
+  <a class="btn btn-primary btn-cancel" [routerLink]="'/admin/bookings'">Vissza</a>
+  <button type="submit" class="btn btn-primary btn-save" [disabled]="!f.valid">Megerősítés</button>
 </form>

@@ -46,6 +46,8 @@ export class AuthService {
           this.saveAuthData(token, expirationDate);
           this.router.navigate(["/admin/bookings"]);
         }
+      }, error => {
+        this.authStatusListener.next(false);
       });
   }
 

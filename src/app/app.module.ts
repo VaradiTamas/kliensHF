@@ -23,6 +23,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {AuthInterceptor} from "./admin/auth/auth-interceptor";
 import {AdminModule} from "./admin/admin.module";
 import { AppLayoutComponent } from './layout/app-layout/app-layout.component';
+import { ErrorComponent } from './error/error.component';
+import {ErrorInterceptor} from "./error/error-interceptor";
 
 @NgModule({
   imports: [
@@ -50,9 +52,14 @@ import { AppLayoutComponent } from './layout/app-layout/app-layout.component';
     VoucherManagingComponent,
     DatePickerComponent,
     HomeComponent,
-    AppLayoutComponent
+    AppLayoutComponent,
+    ErrorComponent
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
-  bootstrap: [AppComponent]
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+  ],
+  bootstrap: [AppComponent],
+  entryComponents: [ErrorComponent]
 })
 export class AppModule { }

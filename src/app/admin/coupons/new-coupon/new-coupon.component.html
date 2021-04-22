@@ -21,7 +21,8 @@
         step="1"
         class="form-control"
         [ngModel] = "voucher == null ? 2 : voucher.numOfNights"
-        id="numOfNights">
+        id="numOfNights"
+        required>
     </div>
   </div>
 
@@ -62,7 +63,8 @@
         class="form-control"
         id="tel"
         [ngModel]="voucher?.tel"
-        placeholder="06201236547">
+        placeholder="06201236547"
+        required>
     </div>
 
     <label class="col-sm-2 col-form-label ml-4" for="numOfChildren">Gyerekek száma:</label>
@@ -89,7 +91,8 @@
         class="form-control"
         id="email"
         placeholder="example@gmail.com"
-        [ngModel]="voucher?.email">
+        [ngModel]="voucher?.email"
+        required>
     </div>
     <label class="col-sm-2 col-form-label ml-4" for="numOfBedrooms">Hálószobák száma:</label>
     <div class="col-1">
@@ -114,7 +117,8 @@
         class="form-control"
         id="country"
         placeholder="Magyarország"
-        [ngModel]="voucher?.country">
+        [ngModel]="voucher?.country"
+        required>
     </div>
     <label class="col-1 col-form-label" for="postcode">Irányítószám:</label>
     <div class="col-1">
@@ -125,7 +129,8 @@
         step="1"
         class="form-control"
         id="postcode"
-        [ngModel]="voucher?.postcode">
+        [ngModel]="voucher?.postcode"
+        required>
     </div>
     <label class="col-1 col-form-label" for="city">Település neve:</label>
     <div class="col-2">
@@ -134,7 +139,8 @@
         type="text"
         class="form-control"
         id="city"
-        [ngModel]="voucher?.city">
+        [ngModel]="voucher?.city"
+        required>
     </div>
   <label class="col-1 col-form-label pl-5" for="address">Cím:</label>
   <div class="col-3 pr-5">
@@ -143,7 +149,8 @@
       type="text"
       class="form-control"
       id="address"
-      [ngModel]="voucher?.address">
+      [ngModel]="voucher?.address"
+      required>
   </div>
   </div>
   <div class="col-3 form-check" >
@@ -155,5 +162,6 @@
       id="isPaid">
     <label class="form-check-label" for="isPaid">Fizetve</label>
   </div>
-  <button type="submit" class="btn btn-primary mt-3" [disabled]="!f.valid">Megerősítés</button>
+  <a class="btn btn-primary btn-cancel" [routerLink]="'/admin/vouchers'">Vissza</a>
+  <button type="submit" class="btn btn-primary btn-save" [disabled]="!f.valid">Megerősítés</button>
 </form>

@@ -1,104 +1,115 @@
-<br>
 <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+<nav class="navbar">
+  <input
+    name="serialNum"
+    class="form-control"
+    type="text"
+    [(ngModel)]="serialNum"
+    (ngModelChange)="Search()"
+    placeholder="Írd be a sorszámot a kereséshez...">
+
+</nav>
+
 <div *ngIf="!isLoading">
   <div *ngFor="let voucher of vouchers">
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <div class="col-2">
-            Sorszám:
-          </div>
-          <div class="col-5 mr-4">
-            {{voucher.id}}
-          </div>
-          <div class="col-1">
-            Név:
-          </div>
-          <div class="col-6">
-            {{voucher.firstName}} {{voucher.lastName}}
-          </div>
-        </mat-panel-title>
-        <div class="col-6">
-          <mat-panel-description>
-            <div class="col-1">
-              Tel:
-            </div>
-            <div class="col-2">
-              {{voucher.tel}}
-            </div>
-            <div class="col-2 pl-4 ml-4">
-              E-mail:
+    <div class="row mt-4 ml-2">
+      <div class="col-11">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <div class="col-3">
+              <b>Sorszám:</b>
+              {{voucher.id}}
             </div>
             <div class="col-3">
+              <b>Név:</b>
+              {{voucher.firstName}} {{voucher.lastName}}
+            </div>
+            <div class="col-2">
+              <b>Tel:</b>
+              {{voucher.tel}}
+            </div>
+            <div class="col-2">
+              <b>E-mail:</b>
               {{voucher.email}}
             </div>
-          </mat-panel-description>
-        </div>
-        <div *ngIf="voucher.isPaid" class="col-1 isPaid">
-          Fizetve
-        </div>
-        <div *ngIf="!voucher.isPaid" class="col-1 notPaid">
-          Nincs fizetve
-        </div>
+            <div class="col-1">
+              <div *ngIf="voucher.isPaid" class="paid">Fizetve</div>
+              <div *ngIf="!voucher.isPaid" class="notPaid">Nincs fizetve</div>
+            </div>
+          </mat-expansion-panel-header>
+          <div class="row">
+            <div class="col-1 address">
+              Cím:
+            </div>
+            <div class="col-4">
+              <div class="row">
+                <div class="col-12">
+                  {{voucher.country}}
+                </div>
+                <div class="col-12">
+                  {{voucher.postcode}} {{voucher.city}}, {{voucher.address}}
+                </div>
+              </div>
+            </div>
+            <div class="col-1 details">
+              Adatok:
+            </div>
+            <div class="col-2">
+              <div class="row">
+                <div class="col-8 pl-4">
+                  Éjszakák száma:
+                </div>
+                <div class="col-4 pl-2">
+                  {{voucher.numOfNights}}
+                </div>
+                <div class="col-8 pl-4">
+                  Hálószobák száma:
+                </div>
+                <div class="col-4 pl-2">
+                  {{voucher.numOfBedrooms}}
+                </div>
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="row">
+                <div class="col-8 pl-4">
+                  Felnőttek száma:
+                </div>
+                <div class="col-4 pl-2">
+                  {{voucher.numOfAdults}}
+                </div>
+                <div class="col-8 pl-4">
+                  Gyerekek száma:
+                </div>
+                <div class="col-4 pl-2">
+                  {{voucher.numOfChildren}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </div>
+
+      <div class="col-1 d-flex justify-content-center align-items-center justify-content-around">
         <a [routerLink]="['/admin/vouchers/edit', voucher.id]">
           <img src="assets/icon/edit.svg">
         </a>
-        <button class="delete" (click)="onDelete(voucher.id)">
+        <a class="delete" (click)="onDelete(voucher.id)">
           <img src="assets/icon/delete.svg">
-        </button>
-      </mat-expansion-panel-header>
-      <div class="row">
-        <div class="col-1 address">
-          Cím:
-        </div>
-        <div class="col-4">
-          <div class="row">
-            <div class="col-12">
-              {{voucher.country}}
-            </div>
-            <div class="col-12">
-              {{voucher.postcode}} {{voucher.city}}, {{voucher.address}}
-            </div>
-          </div>
-        </div>
-        <div class="col-1 details">
-          Adatok:
-        </div>
-        <div class="col-2">
-          <div class="row">
-            <div class="col-8 pl-4">
-              Éjszakák száma:
-            </div>
-            <div class="col-4 pl-2">
-              {{voucher.numOfNights}}
-            </div>
-            <div class="col-8 pl-4">
-              Hálószobák száma:
-            </div>
-            <div class="col-4 pl-2">
-              {{voucher.numOfBedrooms}}
-            </div>
-          </div>
-        </div>
-        <div class="col-2">
-          <div class="row">
-            <div class="col-8 pl-4">
-              Felnőttek száma:
-            </div>
-            <div class="col-4 pl-2">
-              {{voucher.numOfAdults}}
-            </div>
-            <div class="col-8 pl-4">
-              Gyerekek száma:
-            </div>
-            <div class="col-4 pl-2">
-              {{voucher.numOfChildren}}
-            </div>
-          </div>
-        </div>
+        </a>
       </div>
-    </mat-expansion-panel>
+    </div>
   </div>
 
-  <a class="btn btn-primary" href="/admin/vouchers/new">Utalvány hozzáadása</a>
+  <a class="btn btn-primary new-voucher-button" href="/admin/vouchers/new">Utalvány hozzáadása</a>
 </div>
+
+<mat-paginator
+  class="paginator"
+  *ngIf="vouchers.length > 0"
+  [length]="totalVouchers"
+  [pageSize]="vouchersPerPage"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="onChangedPage($event)">
+</mat-paginator>

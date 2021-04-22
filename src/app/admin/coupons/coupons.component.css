@@ -16,10 +16,33 @@ mat-spinner {
   padding-left: 75px;
 }
 
-.isPaid{
+.paid{
   color: green;
+  background: aquamarine;
+  text-align: center;
+  border-radius: 25px;
 }
 
 .notPaid{
   color: red;
+  background: darksalmon;
+  text-align: center;
+  border-radius: 25px;
+}
+
+a{
+  cursor: pointer;
+}
+
+.new-voucher-button{
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin: 30px;
+}
+
+.paginator{
+  position: fixed;
+  bottom: 0;
+  margin: 25px;
 }

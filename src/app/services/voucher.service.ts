@@ -8,66 +8,57 @@ import {Voucher} from "../model/voucher.model";
 @Injectable({providedIn: 'root'})
 export class VoucherService{
   private vouchers: Voucher[] = [];
-  private vouchersUpdated = new Subject<Voucher[]>()
+  private vouchersUpdated = new Subject<{vouchers: Voucher[], voucherCount: number}>()
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  getVouchers(){
-    this.http.get<{message: string, vouchers: any}>('http://localhost:3000/admin/vouchers')
-      .pipe(map((serverVouchers) => {
-        return serverVouchers.vouchers.map(voucher => {
-          return {
-            firstName: voucher.firstName,
-            lastName: voucher.lastName,
-            tel: voucher.tel,
-            email: voucher.email,
-            numOfNights: voucher.numOfNights,
-            numOfChildren: voucher.numOfChildren,
-            numOfAdults: voucher.numOfAdults,
-            numOfBedrooms: voucher.numOfBedrooms,
-            country: voucher.country,
-            postcode: voucher.postcode,
-            city: voucher.city,
-            address: voucher.address,
-            isPaid: voucher.isPaid,
-            id: voucher._id,
-          };
-        });
+  getVouchers(vouchersPerPage: number, currentPage: number){
+    const queryParams = `?pagesize=${vouchersPerPage}&page=${currentPage}`;
+    this.http.get<{message: string, vouchers: any, maxVouchers: number}>('http://localhost:3000/admin/vouchers' + queryParams)
+      .pipe(
+        map((serverVouchers) => {
+          return {vouchers: serverVouchers.vouchers.map(voucher => {
+            return {
+              firstName: voucher.firstName,
+              lastName: voucher.lastName,
+              tel: voucher.tel,
+              email: voucher.email,
+              numOfNights: voucher.numOfNights,
+              numOfChildren: voucher.numOfChildren,
+              numOfAdults: voucher.numOfAdults,
+              numOfBedrooms: voucher.numOfBedrooms,
+              country: voucher.country,
+              postcode: voucher.postcode,
+              city: voucher.city,
+              address: voucher.address,
+              isPaid: voucher.isPaid,
+              id: voucher._id,
+            };
+          }), maxVouchers: serverVouchers.maxVouchers};
       }))
       .subscribe((transformedVouchers)=>{
-        this.vouchers = transformedVouchers;
-        this.vouchersUpdated.next([...this.vouchers]);
+        this.vouchers = transformedVouchers.vouchers;
+        this.vouchersUpdated.next({
+          vouchers: [...this.vouchers],
+          voucherCount: transformedVouchers.maxVouchers
+        });
       });
   }
 
   addVoucher(voucher: Voucher){
     this.http.post<{message: string, voucherId: string}>('http://localhost:3000/admin/vouchers', voucher)
       .subscribe((responseData)=>{
-        const id = responseData.voucherId;
-        voucher.id = id;
-        this.vouchers.push(voucher);
-        this.vouchersUpdated.next([...this.vouchers]);
         this.router.navigate(["/admin/vouchers"]);
       });
   }
 
   deleteVoucher(voucherId: string){
-    this.http.delete('http://localhost:3000/admin/vouchers/delete/' + voucherId)
-      .subscribe(() => {
-        const updatedVouchers = this.vouchers.filter(voucher => voucher.id !== voucherId);
-        this.vouchers = updatedVouchers;
-        this.vouchersUpdated.next([...this.vouchers]);
-      });
+    return this.http.delete('http://localhost:3000/admin/vouchers/delete/' + voucherId);
   }
 
   updateVoucher(voucher: Voucher){
     this.http.put('http://localhost:3000/admin/vouchers/edit/' + voucher.id, voucher)
       .subscribe((responseData)=>{
-        const updatedVouchers = [...this.vouchers];                                     //hogy kliensoldalon is egybol megjelenlen a valtozas
-        const oldVoucherIndex = updatedVouchers.findIndex(p => p.id === voucher.id);
-        updatedVouchers[oldVoucherIndex] = voucher;
-        this.vouchers = updatedVouchers;
-        this.vouchersUpdated.next([...this.vouchers]);
         this.router.navigate(["/admin/vouchers"]);
       });
   }

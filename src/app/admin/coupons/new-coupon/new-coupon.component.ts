@@ -1,24 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap} from "@angular/router";
 import {NgForm} from "@angular/forms";
 import {Voucher} from "../../../model/voucher.model";
 import {VoucherService} from "../../../services/voucher.service";
+import {Subscription} from "rxjs";
+import {AuthService} from "../../auth/auth.service";
 
 @Component({
   selector: 'app-new-coupon',
   templateUrl: './new-coupon.component.html',
   styleUrls: ['./new-coupon.component.css']
 })
-export class NewCouponComponent implements OnInit {
-
+export class NewCouponComponent implements OnInit, OnDestroy {
+  authSubscription: Subscription;
   voucher: Voucher;
   isLoading = false;
   private mode = 'create';
   private voucherId: string;
 
-  constructor(private voucherService: VoucherService, public route: ActivatedRoute) {}
+  constructor(private voucherService: VoucherService, public route: ActivatedRoute, private authService: AuthService) {}
 
   ngOnInit() {
+    this.authSubscription = this.authService
+      .getAuthStatusListener()
+      .subscribe(authStatus => {
+        this.isLoading = false;
+      });
     this.route.paramMap.subscribe((paramMap:ParamMap) => {
       if(paramMap.has('id')) {
         this.mode = 'edit';
@@ -79,8 +86,10 @@ export class NewCouponComponent implements OnInit {
     else{
       this.voucherService.updateVoucher(formVoucher);
     }
-
     form.reset();
   }
 
+  ngOnDestroy() {
+    this.authSubscription.unsubscribe();
+  }
 }

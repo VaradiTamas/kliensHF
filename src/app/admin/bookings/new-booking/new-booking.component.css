@@ -5,3 +5,16 @@ mat-spinner{
 input.ng-invalid.ng-touched{
   border: 1px solid red;
 }
+
+.btn-save{
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin: 30px;
+}
+
+.btn-cancel{
+  position: fixed;
+  bottom: 0;
+  margin: 25px;
+}
