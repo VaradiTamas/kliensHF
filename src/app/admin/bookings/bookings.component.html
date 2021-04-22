@@ -1,7 +1,9 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 <div *ngIf="!isLoading">
+  <br>
+  <br>
   <div *ngFor="let booking of bookings">
-    <div class="row mt-4 ml-2">
+    <div class="row mb-4 ml-2">
       <div class="col-11">
         <mat-expansion-panel>
           <mat-expansion-panel-header>

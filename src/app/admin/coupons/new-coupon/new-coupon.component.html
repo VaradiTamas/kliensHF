@@ -1,5 +1,7 @@
+<br>
 <mat-spinner *ngIf="isLoading"></mat-spinner>
-<form (ngSubmit)="onSubmit(f)" #f="ngForm" class="ml-5 mt-5" *ngIf="!isLoading">
+<br>
+<form (ngSubmit)="onSubmit(f)" #f="ngForm" class="ml-5 mb-5" *ngIf="!isLoading">
   <div class="form-group row mb-5">
     <label class="col-sm-2 col-form-label" for="lastName">Vezetéknév: </label>
     <div class="col-6">
@@ -162,6 +164,6 @@
       id="isPaid">
     <label class="form-check-label" for="isPaid">Fizetve</label>
   </div>
-  <a class="btn btn-primary btn-cancel" [routerLink]="'/admin/vouchers'">Vissza</a>
-  <button type="submit" class="btn btn-primary btn-save" [disabled]="!f.valid">Megerősítés</button>
+  <a mat-raised-button color="primary" class="btn-cancel" [routerLink]="'/admin/vouchers'">Vissza</a>
+  <button mat-raised-button color="primary" type="submit" class="btn-save" [disabled]="!f.valid">Megerősítés</button>
 </form>

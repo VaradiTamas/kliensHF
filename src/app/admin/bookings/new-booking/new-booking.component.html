@@ -1,5 +1,7 @@
+<br>
 <mat-spinner *ngIf="isLoading"></mat-spinner>
-<form (ngSubmit)="onSubmit(f)" #f="ngForm" class="ml-5 mt-5" *ngIf="!isLoading">
+<br>
+<form (ngSubmit)="onSubmit(f)" #f="ngForm" class="ml-5 mb-5" *ngIf="!isLoading">
   <div class="row mb-5">
     <div class="col-4">
       <label for="from">Mettől:</label>
@@ -36,7 +38,7 @@
     <span *ngIf="alreadyCheckedVoucher && !isVoucherValid">
       <img src="assets/icon/wrong.svg">
     </span>
-    <a class="btn btn-primary ml-4" (click)="onCheckVoucher(f)">Ellenőrzés</a>
+    <a mat-raised-button color="primary" class="ml-4" (click)="onCheckVoucher(f)">Ellenőrzés</a>
   </div>
   <div class="form-group row mb-5">
     <label class="col-sm-2 col-form-label" for="lastName">Vezetéknév: </label>
@@ -161,6 +163,6 @@
       id="isPaid">
     <label class="form-check-label" for="isPaid">Fizetve</label>
   </div>
-  <a class="btn btn-primary btn-cancel" [routerLink]="'/admin/bookings'">Vissza</a>
-  <button type="submit" class="btn btn-primary btn-save" [disabled]="!f.valid">Megerősítés</button>
+  <a mat-raised-button color="primary" class="btn-cancel" [routerLink]="'/admin/bookings'">Vissza</a>
+  <button mat-raised-button color="primary" type="submit" class="btn-save" [disabled]="!f.valid">Megerősítés</button>
 </form>

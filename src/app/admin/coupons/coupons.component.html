@@ -1,17 +1,16 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 
-<nav class="navbar">
-  <input
-    name="serialNum"
-    class="form-control"
-    type="text"
-    [(ngModel)]="serialNum"
-    (ngModelChange)="Search()"
-    placeholder="Írd be a sorszámot a kereséshez...">
-
-</nav>
-
 <div *ngIf="!isLoading">
+  <nav class="navbar">
+    <input
+      name="serialNum"
+      class="form-control"
+      type="text"
+      [(ngModel)]="serialNum"
+      (ngModelChange)="Search()"
+      placeholder="Írd be a sorszámot a kereséshez...">
+  </nav>
+
   <div *ngFor="let voucher of vouchers">
     <div class="row mt-4 ml-2">
       <div class="col-11">
