@@ -3,6 +3,10 @@
   width: 2000px;
 }
 
+.spacer{
+  flex: 1 1 auto;
+}
+
 .textContainer{
   position: relative;
   text-align: center;

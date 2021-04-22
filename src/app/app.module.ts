@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
+import { HeaderComponent } from './layout/app-header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GalleryComponent } from './gallery/gallery.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -18,9 +18,13 @@ import { DatePickerComponent } from './reservation/date-picker/date-picker.compo
 import {MaterialModule} from "./material.module";
 import {AppRoutingModule} from "./app-routing.module";
 import { HomeComponent } from './home/home.component';
-import { AdminComponent } from './admin/admin.component';
-import {HttpClientModule} from "@angular/common/http";
-import { BookingsComponent } from './admin/bookings/bookings.component';
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {AuthInterceptor} from "./admin/auth/auth-interceptor";
+import {AdminModule} from "./admin/admin.module";
+import { AppLayoutComponent } from './layout/app-layout/app-layout.component';
+import { ErrorComponent } from './error/error.component';
+import {ErrorInterceptor} from "./error/error-interceptor";
 
 @NgModule({
   imports: [
@@ -30,7 +34,9 @@ import { BookingsComponent } from './admin/bookings/bookings.component';
     MaterialModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    AdminModule
   ],
   declarations: [
     AppComponent,
@@ -46,10 +52,14 @@ import { BookingsComponent } from './admin/bookings/bookings.component';
     VoucherManagingComponent,
     DatePickerComponent,
     HomeComponent,
-    AdminComponent,
-    BookingsComponent
+    AppLayoutComponent,
+    ErrorComponent
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+  ],
+  bootstrap: [AppComponent],
+  entryComponents: [ErrorComponent]
 })
 export class AppModule { }

@@ -1,16 +1,16 @@
-export interface Booking{
+export interface Voucher{
   id: string;
-  voucherId: string;
   firstName: string;
   lastName: string;
   email: string;
   tel: string;
-  from: string;
-  to: string;
-  offerName: string;
   numOfChildren: number;
   numOfAdults: number;
   numOfBedrooms: number;
-  comment: string;
+  numOfNights: number;
+  country: string;
+  postcode: number;
+  city: string;
+  address: string;
   isPaid: boolean;
 }

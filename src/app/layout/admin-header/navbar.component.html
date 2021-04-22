@@ -1,0 +1,20 @@
+<mat-toolbar color="primary">
+  <span>
+    <a routerLink="/admin">Admin felület</a>
+  </span>
+  <span class="spacer"></span>
+  <ul>
+    <li *ngIf="userIsAuthenticated">
+      <a mat-button routerLink="/admin/bookings" routerLinkActive="mat-accent">Foglalások</a>
+    </li>
+    <li *ngIf="userIsAuthenticated">
+      <a mat-button routerLink="/admin/vouchers" routerLinkActive="mat-accent">Utalványok</a>
+    </li>
+    <li *ngIf="!userIsAuthenticated">
+      <a mat-button routerLink="/admin/login" routerLinkActive="mat-accent">Bejelentkezés</a>
+    </li>
+    <li *ngIf="userIsAuthenticated">
+      <button mat-button (click)="onLogout()">Kijelentkezés</button>
+    </li>
+  </ul>
+</mat-toolbar>

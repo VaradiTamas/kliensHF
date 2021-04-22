@@ -1,13 +1,19 @@
-mat-spinner{
+.delete{
+  margin-right: 20px;
+}
+
+mat-spinner {
   margin: auto;
 }
 
-.date{
-  text-align: center;
+.address{
+  font-weight: bold;
+  padding-left: 32px;
 }
 
-.icon{
-  cursor: pointer;
+.details{
+  font-weight: bold;
+  padding-left: 75px;
 }
 
 .paid{
@@ -24,7 +30,11 @@ mat-spinner{
   border-radius: 25px;
 }
 
-.add-reservation-button{
+a{
+  cursor: pointer;
+}
+
+.new-voucher-button{
   position: fixed;
   bottom: 0;
   right: 0;

@@ -1,38 +1,41 @@
 const express = require('express');
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const cors = require("cors");
+
+const bookingsRoutes = require("./routes/bookings");
+const vouchersRoutes = require("./routes/vouchers");
+const userRoutes = require("./routes/user");
 
 const app = express();
 
-app.use((req,res,next) =>{
+mongoose.connect("mongodb+srv://fahazfoglalo:ChsgicCcXqDvda26@cluster0.vyq6f.mongodb.net/firstDatabase?w=majority", {useNewUrlParser: true, useUnifiedTopology: true})
+  .then(()=>{
+    console.log('Connected to database!');
+  })
+  .catch(()=>{
+    console.log('Connection to database failed!');
+  });
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(cors());
+
+app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
-    "Access-Control-Allow-Header",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
   res.setHeader(
     "Access-Control-Allow-Methods",
-    "GET, POST, PATCH, DELETE, OPTIONS"
+    "GET, POST, PATCH, PUT, DELETE, OPTIONS"
   );
   next();
 });
 
-app.use('/admin/bookings', (req,res,next) => {
-  const bookings = [
-    {
-      numOfChildren: 1,
-      numOfAdults: 1,
-      numOfBedrooms: 2,
-      comment: 'elso obj',
-      isPaid: true
-    },
-    {
-      numOfChildren: 1,
-      numOfAdults: 10,
-      numOfBedrooms: 1,
-      comment: 'masodik obj',
-      isPaid: false
-    }
-  ];
-  res.status(200).json(bookings);
-});
+app.use("/admin/bookings", bookingsRoutes);
+app.use("/admin/vouchers", vouchersRoutes);
+app.use("/admin/user", userRoutes);
 
 module.exports = app;
