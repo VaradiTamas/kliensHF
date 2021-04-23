@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     );
   }
 
-  onLogin(form: NgForm) {
+  onLogin(form: NgForm) {     //authServicenek elkuldjuk a megadott email, jelszo parost
     if (form.invalid) {
       return;
     }

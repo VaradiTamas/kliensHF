@@ -10,7 +10,7 @@ import {NewBookingComponent} from './admin/bookings/new-booking/new-booking.comp
 import {NewCouponComponent} from './admin/coupons/new-coupon/new-coupon.component';
 import {LoginComponent} from './admin/login/login.component';
 
-const routes: Routes =
+const routes: Routes =    // routokat itt definialom
   [
     {path: 'admin', component: AdminComponent, children: [
       {path: 'bookings', component: BookingsComponent, canActivate: [AuthGuard]},

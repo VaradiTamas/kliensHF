@@ -12,8 +12,8 @@ export class VoucherService{
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  getVouchers(vouchersPerPage: number, currentPage: number){
-    const queryParams = `?pagesize=${vouchersPerPage}&page=${currentPage}`;
+  getVouchers(vouchersPerPage: number, currentPage: number){  //az adott oladlbeallitasoknak megfeleloen frissiti (ujra lekeri) a vouchereket
+    const queryParams = `?pagesize=${vouchersPerPage}&page=${currentPage}`;   //queryben tovabbitjuk a backend fele az oldalbeallitasokat
     this.http.get<{message: string, vouchers: any, maxVouchers: number}>('http://localhost:3000/admin/vouchers' + queryParams)
       .pipe(
         map((serverVouchers) => {
@@ -45,25 +45,25 @@ export class VoucherService{
       });
   }
 
-  addVoucher(voucher: Voucher){
+  addVoucher(voucher: Voucher){   //egy vouchert adunk hozza a mar meglevokhoz majd az /admin/vouchers routera navigalunk
     this.http.post<{message: string, voucherId: string}>('http://localhost:3000/admin/vouchers', voucher)
       .subscribe((responseData)=>{
         this.router.navigate(["/admin/vouchers"]);
       });
   }
 
-  deleteVoucher(voucherId: string){
+  deleteVoucher(voucherId: string){     //kitoroljuk az adott id-ju vouchert, de erre meg subscribeolni kell ahol meghivjuk!!!
     return this.http.delete('http://localhost:3000/admin/vouchers/delete/' + voucherId);
   }
 
-  updateVoucher(voucher: Voucher){
+  updateVoucher(voucher: Voucher){      //az adott vouchert frissitjuk a parameterben kapottal majd az /admin/vouchers routera navigalunk
     this.http.put('http://localhost:3000/admin/vouchers/edit/' + voucher.id, voucher)
       .subscribe((responseData)=>{
         this.router.navigate(["/admin/vouchers"]);
       });
   }
 
-  getVoucher(id: string){
+  getVoucher(id: string){   //visszaadja az adott id-ju vouchert
     return this.http.get<{
       _id: string,
       firstName: string,
@@ -83,6 +83,6 @@ export class VoucherService{
   }
 
   getVoucherUpdateListener(){
-    return this.vouchersUpdated.asObservable();
+    return this.vouchersUpdated.asObservable();   //visszaadja observable-kent a vouchersUpdated-et ami azert jo mert a komponensekben majd leiratkozhatunk errol a subjectrol
   }
 }

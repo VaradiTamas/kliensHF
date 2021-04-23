@@ -1,22 +1,22 @@
-import {Booking} from "../model/booking.model";
-import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {Subject} from "rxjs";
-import {map} from "rxjs/operators";
-import {Router} from "@angular/router";
+import {Booking} from '../model/booking.model';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Subject} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {Router} from '@angular/router';
 
 @Injectable({providedIn: 'root'})
 export class BookingService{
   private bookings: Booking[] = [];
-  private bookingsUpdated = new Subject<{bookings: Booking[], bookingCount: number}>()
+  private bookingsUpdated = new Subject<{bookings: Booking[], bookingCount: number}>();
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  getBookings(bookingsPerPage: number, currentPage: number){
-    const queryParams = `?pagesize=${bookingsPerPage}&page=${currentPage}`;
+  getBookings(bookingsPerPage: number, currentPage: number){      //frissiti (ujra lekéri a szerverről) az adott oldalbeallitasoknak megfeleloen a bookingokat
+    const queryParams = `?pagesize=${bookingsPerPage}&page=${currentPage}`;   //query parameterekben tovabbitjuk a backendnek az oldalbeallitasokat
     this.http.get<{message: string, bookings: any, maxBookings: number}>('http://localhost:3000/admin/bookings' + queryParams)
       .pipe(map((serverBookings) => {
-        return { bookings: serverBookings.bookings.map(booking => {
+        return { bookings: serverBookings.bookings.map(booking => {   //megfelelo formatumra alakitjuk a bookingot
           return {
             firstName: booking.firstName,
             lastName: booking.lastName,
@@ -35,7 +35,7 @@ export class BookingService{
           };
         }), maxBookings: serverBookings.maxBookings};
       }))
-      .subscribe((transformedBookingsData)=>{
+      .subscribe((transformedBookingsData) => { //a mar megfelelo bookingokat elmentjuk es nextet hivunk
         this.bookings = transformedBookingsData.bookings;
         this.bookingsUpdated.next({
           bookings: [...this.bookings],
@@ -44,25 +44,25 @@ export class BookingService{
       });
   }
 
-  addBooking(booking: Booking){
+  addBooking(booking: Booking){   //a parameterben kapott booking-ot hozzaadja a mar meglevokhoz es elnavigal az /admin/bookings routera
     this.http.post<{message: string, bookingId: string}>('http://localhost:3000/admin/bookings', booking)
-      .subscribe((responseData)=>{
-        this.router.navigate(["/admin/bookings"]);
+      .subscribe((responseData) => {
+        this.router.navigate(['/admin/bookings']);
       });
   }
 
-  deleteBooking(bookingId: string){
+  deleteBooking(bookingId: string){   //kitorli az adott id-ju bookingot
     return this.http.delete('http://localhost:3000/admin/bookings/delete/' + bookingId);
   }
 
-  updateBooking(booking: Booking){
+  updateBooking(booking: Booking){    //a kapott booking objektumot lecsereli az adatbazisban levo regi bookinggal (id-juk ugyan az)
     this.http.put('http://localhost:3000/admin/bookings/edit/' + booking.id, booking)
-      .subscribe((responseData)=>{
-        this.router.navigate(["/admin/bookings"]);
+      .subscribe((responseData) => {
+        this.router.navigate(['/admin/bookings']);
       });
   }
 
-  getBooking(id: string){
+  getBooking(id: string){   //visszaadja az adott id-ju bookingot
     return this.http.get<{
       _id: string,
       voucherId: string,
@@ -81,7 +81,7 @@ export class BookingService{
     }>('http://localhost:3000/admin/bookings/' + id);
   }
 
-  getBookingUpdateListener(){
+  getBookingUpdateListener(){   //visszaadja observable-kent a bookingsUpdated-et ami azert jo mert a komponensekben majd leiratkozhatunk errol a subjectrol
     return this.bookingsUpdated.asObservable();
   }
 }

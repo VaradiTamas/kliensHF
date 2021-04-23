@@ -32,18 +32,18 @@ export class BookingsComponent implements OnInit, OnDestroy {
   }
 
   onChangedPage(pageData: PageEvent){
-    this.isLoading = true;
-    this.currentPage = pageData.pageIndex + 1;
-    this.bookingsPerPage = pageData.pageSize;
-    this.bookingService.getBookings(this.bookingsPerPage, this.currentPage);
+    this.isLoading = true;                                                    //spinner mutatasa
+    this.currentPage = pageData.pageIndex + 1;                                //jelenlegi index beallitasa az alapjan mit valasztottunk ki
+    this.bookingsPerPage = pageData.pageSize;                                 //-||-
+    this.bookingService.getBookings(this.bookingsPerPage, this.currentPage);  //csak az oldalbeallitasoknak megfelelo bookingok frissitese
   }
 
   onDelete(bookingId: string){
-    this.isLoading = true;
+    this.isLoading = true;    //spinner mutatasa
     this.bookingService.deleteBooking(bookingId).subscribe(() => {
-      this.bookingService.getBookings(this.bookingsPerPage, this.currentPage);
+      this.bookingService.getBookings(this.bookingsPerPage, this.currentPage);  //bookingok frissitese (deleted elem nelkul)
     }, () => {
-      this.isLoading = false;
+      this.isLoading = false;   //ha hiba tortenne a spinner elrejtese es az adatok mutatasa
     })
   }
 

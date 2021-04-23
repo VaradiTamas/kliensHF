@@ -7,8 +7,8 @@ import {Subscription} from 'rxjs';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit, OnDestroy {
-  userIsAuthenticated = false;
+export class NavbarComponent implements OnInit, OnDestroy {   //ez lesz a headerunk, azert kell az authService, mert nem mindig akarjuk
+  userIsAuthenticated = false;                                //az osszes menuopciot megjeleniteni
   private authSubscription: Subscription;
 
   constructor(private authService: AuthService) { }
@@ -23,7 +23,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   onLogout() {
-    this.authService.logout();
+    this.authService.logout();      //kijelentkezunk, ezaltal a menuopciok eltunnek majd
   }
 
   ngOnDestroy(): void {

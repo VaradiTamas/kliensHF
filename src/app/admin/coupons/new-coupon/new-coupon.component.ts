@@ -27,8 +27,8 @@ export class NewCouponComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       });
     this.route.paramMap.subscribe((paramMap:ParamMap) => {
-      if(paramMap.has('id')) {
-        this.mode = 'edit';
+      if(paramMap.has('id')) {                    //ha olyan routon erkezunk amiben szerepel az id
+        this.mode = 'edit';                             //akkor a mode attributumot edit-re allitjuk
         this.voucherId = paramMap.get('id');
         this.isLoading = true;
         this.voucherService.getVoucher(this.voucherId).subscribe(voucherData => {
@@ -51,15 +51,15 @@ export class NewCouponComponent implements OnInit, OnDestroy {
           };
         });
       }
-      else{
+      else{                           //egyebkent pedig create-re
         this.mode = 'create';
         this.voucherId = null;
       }
     });
   }
 
-  onSubmit(form : NgForm){
-    if(form.invalid) {
+  onSubmit(form : NgForm){    //ha create modban vagyunk addVoucher, ha pedig edit modban akkor
+    if(form.invalid) {        //updateVoucher fuggvenyt hiv a voucherService-n a formba beirt adatokat tovabbitva
       return;
     }
     this.isLoading = true;

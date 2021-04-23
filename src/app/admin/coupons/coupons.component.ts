@@ -33,26 +33,26 @@ export class CouponsComponent implements OnInit, OnDestroy {
   }
 
   onChangedPage(pageData: PageEvent){
-    this.isLoading = true;
-    this.currentPage = pageData.pageIndex + 1;
+    this.isLoading = true;        //spinner mutatasa oldalvaltas utan
+    this.currentPage = pageData.pageIndex + 1;                //jelenlegi oldalindex beallitasa az alapjan mit valasztottunk ki a UI-n
     this.vouchersPerPage = pageData.pageSize;
-    this.voucherService.getVouchers(this.vouchersPerPage, this.currentPage);
+    this.voucherService.getVouchers(this.vouchersPerPage, this.currentPage);  //frissiti a vouchereket a beallitasok alapjan
   }
 
   onDelete(voucherId: string){
-    this.isLoading = true;
+    this.isLoading = true;  //spinner mutatatasa torles utan
     this.voucherService.deleteVoucher(voucherId).subscribe(() => {
-      this.voucherService.getVouchers(this.vouchersPerPage, this.currentPage);
+      this.voucherService.getVouchers(this.vouchersPerPage, this.currentPage);    //voucherek frissitese, hogy a torolt voucher mar ne legyen lathato
     }, () => {
-      this.isLoading = false;
+      this.isLoading = false;   //ha hiba tortenne ne a spinner forogjon orokre
     });
   }
 
   Search(){
-    if(this.serialNum == ""){
+    if(this.serialNum == ""){     //ha a keresomezoben nincs semmi akkor valtozatlan minden
       this.ngOnInit();
     }else{
-      this.vouchers =this.vouchers.filter(res => {
+      this.vouchers =this.vouchers.filter(res => {    //ha pedig mar beirtunk valamit csak azokat a vouchereket mutatja amiknek az id-jukre illeszkedik a beirt szoveg
         return res.id.toLocaleLowerCase().match(this.serialNum.toLocaleLowerCase());
       })
     }

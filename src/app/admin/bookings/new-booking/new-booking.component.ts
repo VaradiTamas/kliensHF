@@ -26,7 +26,7 @@ export class NewBookingComponent implements OnInit, OnDestroy{
   constructor(private bookingService: BookingService,
               private voucherService: VoucherService,
               public route: ActivatedRoute,
-              private authService: AuthService) {}
+              private authService: AuthService){}
 
   ngOnInit() {
     this.authSubscription = this.authService
@@ -34,8 +34,8 @@ export class NewBookingComponent implements OnInit, OnDestroy{
       .subscribe(authStatus => {
         this.isLoading = false;
       });
-    this.route.paramMap.subscribe((paramMap:ParamMap) => {
-      if(paramMap.has('id')) {
+    this.route.paramMap.subscribe((paramMap:ParamMap) => {  //ha olyan routon erkezunk amiben szerepel az id
+      if(paramMap.has('id')) {                             //akkor a mode attributumot edit-re allitjuk
         this.mode = 'edit';
         this.bookingId = paramMap.get('id');
         this.isLoading = true;
@@ -59,7 +59,7 @@ export class NewBookingComponent implements OnInit, OnDestroy{
           };
         });
       }
-      else{
+      else{     //egyebkent pedig create-re
         this.mode = 'create';
         this.bookingId = null;
       }
@@ -70,15 +70,15 @@ export class NewBookingComponent implements OnInit, OnDestroy{
     if(form.invalid) {
       return;
     }
-    this.isLoading = true;
+    this.isLoading = true;            //spinner mutatasa
     const value = form.value;
     var offerName: string;
-    if(value.offerName == null){
+    if(value.offerName == null){      //ha nem irunk be csomagnevet akkor az "általános" nevet fogja kapni
       offerName = "általános";
     }else{
       offerName = value.offerName;
     }
-    const formBooking = {
+    const formBooking = {                     //formra beirt adatok alapjan letrehozott objektum
       id: this.bookingId,
       firstName: value.firstName,
       lastName: value.lastName,
@@ -94,17 +94,17 @@ export class NewBookingComponent implements OnInit, OnDestroy{
       to: value.to,
       offerName: offerName
     };
-    if(this.mode === 'create'){
+    if(this.mode === 'create'){                         //ha letrehozas modban voltunk akkor az addBooking fuggvenyt hivjuk
       this.bookingService.addBooking(formBooking);
     }
-    else{
+    else{                                               //ha pedig modositas modban akkor az updateBookingot
       this.bookingService.updateBooking(formBooking);
     }
 
     form.reset();
   }
 
-  onCheckVoucher(form : NgForm){
+  onCheckVoucher(form : NgForm){    //leellenorzi hogy a beirt koddal letezik e voucher
     const value = form.value;
     this.voucherService.getVoucher(value.voucherId).subscribe(voucherData => {
       this.voucher = {
@@ -123,21 +123,17 @@ export class NewBookingComponent implements OnInit, OnDestroy{
         address: voucherData.address,
         isPaid: voucherData.isPaid
       };
-      if(this.voucher.id == value.voucherId){
+      if(this.voucher.id == value.voucherId){   //ha kaptunk vissza vouchert, tehat van ilyen id-ju
         this.isVoucherValid = true;
       }
       else{
         this.isVoucherValid = false;
       }
-      this.alreadyCheckedVoucher = true;
+      this.alreadyCheckedVoucher = true;      //azert kell mert a mezo mellett addig nem jelenitjuk meg a pipat amig hozza sem nyultunk
     });
   }
 
   ngOnDestroy() {
     this.authSubscription.unsubscribe();
   }
-
-  /*onClear() {
-    this.newBookingForm.reset();
-  }*/
 }
