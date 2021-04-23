@@ -38,7 +38,7 @@
     <span *ngIf="alreadyCheckedVoucher && !isVoucherValid">
       <img src="assets/icon/wrong.svg">
     </span>
-    <a mat-raised-button color="primary" class="ml-4" (click)="onCheckVoucher(f)">Ellenőrzés</a>
+    <a mat-raised-button color="primary" class="ml-4" (click)="onCheckVoucher(f)" [disabled]="!f.valid">Ellenőrzés</a>
   </div>
   <div class="form-group row mb-5">
     <label class="col-sm-2 col-form-label" for="lastName">Vezetéknév: </label>

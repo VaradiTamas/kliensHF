@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {NgForm} from "@angular/forms";
-import {AuthService} from "../auth.service";
-import {Subscription} from "rxjs";
+import {NgForm} from '@angular/forms';
+import {Subscription} from 'rxjs';
+import {AuthService} from '../../auth/auth.service';
 
 @Component({
   selector: 'app-login',

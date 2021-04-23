@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AuthService} from "../../admin/auth/auth.service";
-import {Subscription} from "rxjs";
+import {AuthService} from '../auth/auth.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'admin-header',

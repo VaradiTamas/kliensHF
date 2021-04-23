@@ -4,7 +4,7 @@ import {NgForm} from "@angular/forms";
 import {Voucher} from "../../../model/voucher.model";
 import {VoucherService} from "../../../services/voucher.service";
 import {Subscription} from "rxjs";
-import {AuthService} from "../../auth/auth.service";
+import {AuthService} from "../../../auth/auth.service";
 
 @Component({
   selector: 'app-new-coupon',

@@ -5,7 +5,7 @@ import {Booking} from "../../../model/booking.model";
 import {ActivatedRoute, ParamMap} from "@angular/router";
 import {Voucher} from "../../../model/voucher.model";
 import {VoucherService} from "../../../services/voucher.service";
-import {AuthService} from "../../auth/auth.service";
+import {AuthService} from "../../../auth/auth.service";
 import {Subscription} from "rxjs";
 
 @Component({

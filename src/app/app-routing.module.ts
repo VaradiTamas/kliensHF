@@ -1,29 +1,32 @@
 import { NgModule } from '@angular/core';
 
 import { Routes, RouterModule } from '@angular/router';
-import {GalleryComponent} from './gallery/gallery.component';
-import {PricesComponent} from './prices/prices.component';
-import {OffersComponent} from './offers/offers.component';
-import {VoucherComponent} from './voucher/voucher.component';
-import {QuestionsComponent} from './questions/questions.component';
-import {ReservationComponent} from './reservation/reservation.component';
-import {AppLayoutComponent} from './layout/app-layout/app-layout.component';
 
-const appRoutes: Routes = [
-  { path: '', component: AppLayoutComponent, children: [
-      { path: '', component: GalleryComponent, pathMatch: 'full'},
-      { path: 'gallery', component: GalleryComponent },
-      { path: 'offers', component: OffersComponent },
-      { path: 'voucher', component: VoucherComponent },
-      { path: 'prices', component: PricesComponent },
-      { path: 'questions', component: QuestionsComponent},
-      { path: 'reservation', component: ReservationComponent}
-    ]
-  }
-];
+import {AdminComponent} from './admin/admin.component';
+import {BookingsComponent} from './admin/bookings/bookings.component';
+import {AuthGuard} from './auth/auth.guard';
+import {CouponsComponent} from './admin/coupons/coupons.component';
+import {NewBookingComponent} from './admin/bookings/new-booking/new-booking.component';
+import {NewCouponComponent} from './admin/coupons/new-coupon/new-coupon.component';
+import {LoginComponent} from './admin/login/login.component';
+
+const routes: Routes =
+  [
+    {path: 'admin', component: AdminComponent, children: [
+      {path: 'bookings', component: BookingsComponent, canActivate: [AuthGuard]},
+      {path: 'vouchers', component: CouponsComponent, canActivate: [AuthGuard]},
+      {path: 'bookings/new', component: NewBookingComponent, canActivate: [AuthGuard]},
+      {path: 'bookings/edit/:id', component: NewBookingComponent, canActivate: [AuthGuard]},
+      {path: 'vouchers/new', component: NewCouponComponent, canActivate: [AuthGuard]},
+      {path: 'vouchers/edit/:id', component: NewCouponComponent, canActivate: [AuthGuard]},
+      {path: 'login', component: LoginComponent}
+    ]},
+    {path: '', redirectTo: '/admin', pathMatch: 'full'},
+  ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule {}
