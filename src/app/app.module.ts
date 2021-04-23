@@ -11,7 +11,6 @@ import { VoucherComponent } from './voucher/voucher.component';
 import { VoucherReservationComponent } from './voucher/voucher-reservation/voucher-reservation.component';
 import { PricesComponent } from './prices/prices.component';
 import { QuestionsComponent } from './questions/questions.component';
-import { AboutusComponent } from './aboutus/aboutus.component';
 import { ReservationComponent } from './reservation/reservation.component';
 import { VoucherManagingComponent } from './reservation/voucher-managing/voucher-managing.component';
 import { DatePickerComponent } from './reservation/date-picker/date-picker.component';
@@ -47,7 +46,6 @@ import {ErrorInterceptor} from "./error/error-interceptor";
     VoucherReservationComponent,
     PricesComponent,
     QuestionsComponent,
-    AboutusComponent,
     ReservationComponent,
     VoucherManagingComponent,
     DatePickerComponent,
