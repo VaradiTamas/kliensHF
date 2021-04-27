@@ -150,11 +150,12 @@
       name="comment"
       id="comment"
       [ngModel]="booking?.comment"
+      class="form-control"
       rows="4"
       cols="120">
     </textarea>
   </div>
-  <div class="col-3 form-check mt-5" >
+  <div class="col-3 form-check mt-2" >
     <input
       name="isPaid"
       class="form-check-input"
@@ -163,6 +164,8 @@
       id="isPaid">
     <label class="form-check-label" for="isPaid">Fizetve</label>
   </div>
-  <a mat-raised-button color="primary" class="btn-cancel" [routerLink]="'/admin/bookings'">Vissza</a>
-  <button mat-raised-button color="primary" type="submit" class="btn-save" [disabled]="!f.valid">Megerősítés</button>
+  <div class="row d-flex justify-content-end">
+    <a mat-raised-button color="primary" class="col-1 mr-4" [routerLink]="'/admin/bookings'">Vissza</a>
+    <button mat-raised-button color="primary" type="submit" class="col-1 mr-5" [disabled]="!f.valid">Megerősítés</button>
+  </div>
 </form>

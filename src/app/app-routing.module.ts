@@ -12,6 +12,7 @@ import {LoginComponent} from './admin/login/login.component';
 
 const routes: Routes =    // routokat itt definialom
   [
+    {path: 'admin', redirectTo: 'admin/login'},
     {path: 'admin', component: AdminComponent, children: [
       {path: 'bookings', component: BookingsComponent, canActivate: [AuthGuard]},
       {path: 'vouchers', component: CouponsComponent, canActivate: [AuthGuard]},
@@ -21,7 +22,7 @@ const routes: Routes =    // routokat itt definialom
       {path: 'vouchers/edit/:id', component: NewCouponComponent, canActivate: [AuthGuard]},
       {path: 'login', component: LoginComponent}
     ]},
-    {path: '', redirectTo: '/admin', pathMatch: 'full'},
+    {path: '', redirectTo: '/admin/login', pathMatch: 'full'},
   ];
 
 @NgModule({
